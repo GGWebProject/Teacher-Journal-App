@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { StudentsListComponent } from './students-list/students-list.component';
+
+import { StudentsListComponent } from './components/students-list/students-list.component';
+import { StudentFormComponent } from './components/student-form/student-form.component';
+import {ExportComponent} from '..';
 
 const routes: Routes = [
   {
@@ -9,14 +12,13 @@ const routes: Routes = [
     // children: [
     //   {
     //     path: 'add',
-    //     component: StudentsListComponent
-    //   },
-    //   {
-    //     path: 'edit/:studentID',
-    //     redirectTo: 'students',
-    //     // component: UserFormComponent,
+    //     component: StudentFormComponent,
     //   },
     // ]
+  },
+  {
+    path: 'students/add',
+    component: StudentFormComponent,
   }
 ];
 
@@ -24,4 +26,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class StudentsRoutingModule { }
+export class StudentsRoutingModule {
+}

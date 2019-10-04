@@ -3,11 +3,10 @@ import {Router} from '@angular/router';
 
 import {Observable} from 'rxjs';
 
-import '../../../../../db/db.json';
+import '../../../../../../db/db.json';
 
-import {StudentsService} from '../services/students.service';
-
-import {Student} from '../../../common/entities';
+import {Student} from '../../../../common/entities';
+import {StudentsService} from '../../services/students.service';
 
 @Component({
   selector: 'app-students-list',
@@ -22,7 +21,7 @@ export class StudentsListComponent implements OnInit {
   constructor(
     private studentsService: StudentsService,
     private router: Router,
-  ) { }
+  ) {}
 
   public onCreateStudent(): void {
     const link: Array<string> = ['/students/add'];

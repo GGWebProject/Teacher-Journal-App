@@ -70,7 +70,8 @@
       "trace"
     ],
     "no-construct": true,
-    "no-parameter-properties": true,
+    // change. before: true
+    "no-parameter-properties": false,
     "no-debugger": true,
     "no-duplicate-variable": true,
     "no-empty": true,

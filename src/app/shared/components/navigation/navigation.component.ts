@@ -1,17 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.sass']
 })
-export class NavigationComponent implements OnInit {
-  public navigationLinks: Array<string> = ['students', 'subjects', 'statistics', 'export'];
+export class NavigationComponent {
+
+  @Input() public navigationLinks: Array<string>;
 
   // tslint:disable-next-line:no-empty
   constructor() {}
-
-  // tslint:disable-next-line:no-empty typedef
-  public ngOnInit() {}
-
 }

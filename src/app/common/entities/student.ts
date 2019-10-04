@@ -1,6 +1,6 @@
 export class Student {
   constructor(
-    private id: number,
+    public id: number,
     public firstName: string,
     public lastName: string,
     public address: string,
