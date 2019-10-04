@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import { StudentsServicesModule } from '../students-services.module';
 import {Student} from '../../../common/entities';
@@ -19,7 +19,8 @@ export class StudentsService {
   ) {}
 
   public getStudents(): Observable<Array<Student>> {
-    return this.http.get<Array<Student>>(this.studentsUrl)
+    return this.http
+      .get<Array<Student>>(this.studentsUrl)
       .pipe(
         retry(3),
         tap(
@@ -27,5 +28,27 @@ export class StudentsService {
           error => console.log(error),
         )
       );
+  }
+
+  public saveStudent(student: Student): Promise<void | Student> {
+
+    const body: string = JSON.stringify({...student});
+    const options: object = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    console.log(body, student);
+    return this.http
+      .post<Student>(this.studentsUrl, body, options)
+      // .pipe(
+      //   retry(3),
+      //   tap(
+      //     data => console.log(data),
+      //     error => console.log(error),
+      //   )
+      // );
+      .toPromise()
+      .then(resp => resp as Student)
+      .catch(err => console.log(err));
   }
 }

@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, ContentChildren, EventEmitter, Input, Output, QueryList, ViewChild} from '@angular/core';
 
 // import {Router} from '@angular/router';
 
 import { Student, Subject } from '../../../common/entities';
+import {NgForm, NgModel} from '@angular/forms';
 
 @Component({
   selector: 'app-shared-form',
@@ -10,29 +11,29 @@ import { Student, Subject } from '../../../common/entities';
   styleUrls: ['./form.component.sass']
 })
 
-export class FormComponent implements OnInit {
+export class FormComponent implements AfterViewInit {
 
   @Input() public entity: string;
   @Input() public submitButtonText: string;
 
-  @Output() public savedStudent: EventEmitter<Student> = new EventEmitter<Student>();
+  @Output() public formData: EventEmitter<NgForm> = new EventEmitter<NgForm>();
 
-  public isStudent: boolean;
+  @ContentChildren(NgModel) public models: QueryList<NgModel>;
+  @ViewChild(NgForm, {static: false}) public form: NgForm;
 
   constructor(
-    // private router: Router
   ) {}
 
-  public ngOnInit(): void {
-    this.isStudent = this.entity === 'student';
+  public ngAfterViewInit(): void {
+    let ngContentModels: NgModel[] = this.models.toArray();
+
+    ngContentModels.forEach((input: NgModel) => {
+      this.form.addControl(input);
+    });
+
   }
 
   public onSaveForm(): void {
-    console.log('Save form');
-
-    // this.savedStudent.emit();
-    // const backUrl: string = this.isStudent ? '/students' : '/subjects';
-    // this.router.navigate([backUrl]);
+    this.formData.emit(this.form);
   }
-
 }

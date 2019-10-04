@@ -1,34 +1,42 @@
 <div class="wrapper">
   <app-shared-form
-    (savedStudent)="onSaveForm($event)"
+    (formData)="onSaveForm($event)"
     [entity]="'student'"
     [submitButtonText]="'Save'"
   >
     <label for="form__name">*Name</label>
     <input
+      name="firstName"
       type="text"
       id="form__name"
       placeholder="Name"
       required
+      ngModel
     >
     <label for="form__last-name">*Last Name:</label>
     <input
+      name="lastName"
       type="text"
       id="form__last-name"
       placeholder="Last Name"
       required
+      ngModel
     >
     <label for="form__address">Address:</label>
     <input
+      name="address"
       type="text"
       id="form__address"
       placeholder="Address"
+      ngModel
     >
     <label for="form__description">Description:</label>
     <input
+      name="description"
       type="text"
       id="form__description"
       placeholder="Description"
+      ngModel
     >
   </app-shared-form>
 </div>
