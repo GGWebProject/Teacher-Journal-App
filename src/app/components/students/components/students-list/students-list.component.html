@@ -1,0 +1,23 @@
+<div class="wrapper">
+  <table class="students__list">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>first name</th>
+      <th>last name</th>
+      <th>address</th>
+      <th>description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let student of studentsList$ | async; let i = index">
+      <td>{{i + 1}}</td>
+      <td>{{student.firstName}}</td>
+      <td>{{student.lastName}}</td>
+      <td>{{student.address}}</td>
+      <td>{{student.description}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <button class="students__button_add" (click)="onCreateStudent()" >Add new Student</button>
+</div>

@@ -1,0 +1,55 @@
+{
+  "subjects": [
+    {
+      "id": 0,
+      "name": "dolor",
+      "teacher": "Rochelle Jenkins",
+      "cabiner": 199,
+      "description": "ipsum veniam adipisicing aliqua esse ex est anim veniam irure"
+    },
+    {
+      "id": 1,
+      "name": "cillum",
+      "teacher": "Krystal Henry",
+      "cabiner": 306,
+      "description": "ullamco occaecat anim sint dolore aliquip reprehenderit consequat nulla enim"
+    },
+    {
+      "id": 2,
+      "name": "mollit",
+      "teacher": "Pruitt Pitts",
+      "cabiner": 250,
+      "description": "deserunt exercitation ex officia nostrud ea consectetur ad amet non"
+    },
+    {
+      "id": 3,
+      "name": "ea",
+      "teacher": "Sondra Barton",
+      "cabiner": 194,
+      "description": "non veniam voluptate cupidatat incididunt sunt eiusmod ullamco veniam consectetur"
+    }
+  ],
+  "students": [
+    {
+      "id": 0,
+      "firstName": "Hayden",
+      "lastName": "Wells",
+      "address": "516 Elm Avenue, Watrous, New York, 4560",
+      "description": "nisi labore nostrud sunt nulla exercitation qui irure laboris id"
+    },
+    {
+      "id": 1,
+      "firstName": "Clare",
+      "lastName": "Merrill",
+      "address": "962 Hampton Avenue, Sabillasville, Delaware, 2955",
+      "description": "ea et pariatur aliqua laborum enim ullamco ut aliquip quis"
+    },
+    {
+      "id": 2,
+      "firstName": "Nadia",
+      "lastName": "Mcneil",
+      "address": "450 Vandam Street, Olney, Montana, 5702",
+      "description": "elit aliquip deserunt quis pariatur incididunt fugiat nisi pariatur laboris"
+    }
+  ]
+}
