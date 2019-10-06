@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSaveForm()" #form="ngForm" [ngClass]="'form_' + entity">
+<form (ngSubmit)="onSaveForm()" #form="ngForm" [ngClass]="'form_' + entity" novalidate>
   <ng-content></ng-content>
   <button
     [disabled]="form.invalid"

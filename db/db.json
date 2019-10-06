@@ -50,6 +50,13 @@
       "lastName": "Mcneil",
       "address": "450 Vandam Street, Olney, Montana, 5702",
       "description": "elit aliquip deserunt quis pariatur incididunt fugiat nisi pariatur laboris"
+    },
+    {
+      "firstName": "Гонтаренко",
+      "lastName": "Александрович",
+      "address": "Улица Шаранговича, 48, 463",
+      "description": "",
+      "id": 3
     }
   ]
 }
