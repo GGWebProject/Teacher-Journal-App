@@ -70,8 +70,7 @@
       "trace"
     ],
     "no-construct": true,
-    // change. before: true
-    "no-parameter-properties": false,
+    "no-parameter-properties": true,
     "no-debugger": true,
     "no-duplicate-variable": true,
     "no-empty": true,
@@ -97,7 +96,7 @@
     ],
     "quotemark": [
       true,
-      "single",
+      "double",
       "avoid-escape"
     ],
     "radix": true,
