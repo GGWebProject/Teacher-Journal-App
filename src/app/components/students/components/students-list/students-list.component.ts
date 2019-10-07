@@ -29,11 +29,13 @@ export class StudentsListComponent implements OnInit {
   public ngOnInit(): void {
     this.dataService
       .getStudents()
-      .subscribe(
-      students => (this.studentsList = [...students]),
-      err => console.log(err),
+      .subscribe((students) => {
+                   this.studentsList = [...students];
+                   this.studentsListOptions = new StudentListOptions(this.studentsList);
+      },
+                 err => console.log(err),
+                 () => console.log()
     );
-    this.studentsListOptions = new StudentListOptions(this.studentsList);
-    console.log(this.studentsListOptions);
   }
+
 }
