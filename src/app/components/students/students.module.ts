@@ -8,14 +8,12 @@ import {
 import {FormComponent} from '../../shared/components';
 
 import { StudentsRoutingModule } from './students-routing.module';
-import { StudentsServicesModule } from './students-services.module';
 
 @NgModule({
   declarations: [ StudentsListComponent,  StudentFormComponent, StudentPageComponent, FormComponent ],
   imports: [
     CommonModule,
     FormsModule,
-    StudentsServicesModule,
     StudentsRoutingModule,
   ]
 })

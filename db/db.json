@@ -1,62 +1,82 @@
 {
-  "subjects": [
-    {
-      "id": 0,
-      "name": "dolor",
-      "teacher": "Rochelle Jenkins",
-      "cabiner": 199,
-      "description": "ipsum veniam adipisicing aliqua esse ex est anim veniam irure"
-    },
-    {
-      "id": 1,
-      "name": "cillum",
-      "teacher": "Krystal Henry",
-      "cabiner": 306,
-      "description": "ullamco occaecat anim sint dolore aliquip reprehenderit consequat nulla enim"
-    },
-    {
-      "id": 2,
-      "name": "mollit",
-      "teacher": "Pruitt Pitts",
-      "cabiner": 250,
-      "description": "deserunt exercitation ex officia nostrud ea consectetur ad amet non"
-    },
-    {
-      "id": 3,
-      "name": "ea",
-      "teacher": "Sondra Barton",
-      "cabiner": 194,
-      "description": "non veniam voluptate cupidatat incididunt sunt eiusmod ullamco veniam consectetur"
-    }
-  ],
   "students": [
     {
       "id": 0,
-      "firstName": "Hayden",
-      "lastName": "Wells",
-      "address": "516 Elm Avenue, Watrous, New York, 4560",
-      "description": "nisi labore nostrud sunt nulla exercitation qui irure laboris id"
+      "firstName": "Vitaly",
+      "lastName": "Hantarenka",
+      "address": "Sharangovicha st., 48",
+      "description": "test desctiprion"
     },
     {
       "id": 1,
-      "firstName": "Clare",
-      "lastName": "Merrill",
-      "address": "962 Hampton Avenue, Sabillasville, Delaware, 2955",
-      "description": "ea et pariatur aliqua laborum enim ullamco ut aliquip quis"
-    },
-    {
-      "id": 2,
-      "firstName": "Nadia",
-      "lastName": "Mcneil",
-      "address": "450 Vandam Street, Olney, Montana, 5702",
-      "description": "elit aliquip deserunt quis pariatur incididunt fugiat nisi pariatur laboris"
+      "firstName": "Test",
+      "lastName": "Testovich",
+      "address": "Testovaya st., 99",
+      "description": "testovii desctiprion"
     },
     {
       "firstName": "Гонтаренко",
       "lastName": "Александрович",
       "address": "Улица Шаранговича, 48, 463",
-      "description": "",
-      "id": 3
+      "description": "eeeeqweqewqewqewq",
+      "id": 2
+    }
+  ],
+  "subjects": [
+    {
+      "id": 0,
+      "name": "Physics",
+      "teacher": "First teacher",
+      "cabiner": 9,
+      "description": "test description of subject 1",
+      "students": [
+        {
+          "id": 0,
+          "marks": {
+            "data": "31.12.2019",
+            "value": 10
+          }
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Chemistry",
+      "teacher": "Second theacher",
+      "cabiner": 99,
+      "description": "test description of subject 2",
+      "students": [
+        {
+          "id": 1,
+          "marks": {
+            "data": "31.12.2019",
+            "value": 10
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Biology",
+      "teacher": "Third teacher",
+      "cabiner": 999,
+      "description": "test description of subject 3",
+      "students": [
+        {
+          "id": 0,
+          "marks": {
+            "data": "31.12.2019",
+            "value": 10
+          }
+        },
+        {
+          "id": 1,
+          "marks": {
+            "data": "31.12.2019",
+            "value": 10
+          }
+        }
+      ]
     }
   ]
 }

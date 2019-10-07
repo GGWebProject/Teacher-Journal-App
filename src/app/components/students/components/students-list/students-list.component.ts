@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
-
-import {Observable} from 'rxjs';
-
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Student } from '../../../../common/entities';
+import { DataService } from '../../../../common/services/data.service';
 import '../../../../../../db/db.json';
-
-import {Student} from '../../../../common/entities';
-import {StudentsService} from '../../services/students.service';
 
 @Component({
   selector: 'app-students-list',
@@ -19,7 +16,7 @@ export class StudentsListComponent implements OnInit {
   public studentsList$: Observable<Array<Student>>;
 
   constructor(
-    private studentsService: StudentsService,
+    private dataService: DataService,
     private router: Router,
   ) {}
 
@@ -29,6 +26,6 @@ export class StudentsListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.studentsList$ = this.studentsService.getStudents();
+    this.studentsList$ = this.dataService.getStudents();
   }
 }
