@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Student } from '../../../../common/entities';
 import { DataService } from '../../../../common/services/data.service';
 import '../../../../../../db/db.json';
+import { StudentListOptions } from './students-list.options';
 
 @Component({
   selector: 'app-students-list',
@@ -12,8 +13,8 @@ import '../../../../../../db/db.json';
 })
 
 export class StudentsListComponent implements OnInit {
-
-  public studentsList$: Observable<Array<Student>>;
+  public studentsListOptions: StudentListOptions;
+  public studentsList: Array<Student>;
 
   constructor(
     private dataService: DataService,
@@ -26,6 +27,13 @@ export class StudentsListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.studentsList$ = this.dataService.getStudents();
+    this.dataService
+      .getStudents()
+      .subscribe(
+      students => (this.studentsList = [...students]),
+      err => console.log(err),
+    );
+    this.studentsListOptions = new StudentListOptions(this.studentsList);
+    console.log(this.studentsListOptions);
   }
 }
