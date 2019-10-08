@@ -1,4 +1,4 @@
-import { IMark } from './mark';
+import { IMark } from './imark';
 
 export interface IStudentMark {
   id: number;

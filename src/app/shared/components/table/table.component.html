@@ -1,11 +1,16 @@
-<p>table works!</p>
-<table>
+<table [ngClass]="tableClass ? tableClass + '__table table' : 'table'">
   <thead>
     <tr>
-
+      <th *ngFor="let header of tableHeaders">
+        {{header.name}}
+      </th>
     </tr>
   </thead>
   <tbody>
-
+    <tr *ngFor="let row of tableView">
+      <td *ngFor="let props of tableHeaders">
+        {{row[props.property]}}
+      </td>
+    </tr>
   </tbody>
 </table>
