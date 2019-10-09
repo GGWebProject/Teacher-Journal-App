@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, ContentChildren, EventEmitter, Input, Output, QueryList, ViewChild} from '@angular/core';
+import { AfterViewInit, Component,
+  ContentChildren, EventEmitter, Input,
+  Output, QueryList, ViewChild
+} from '@angular/core';
 
-// import {Router} from '@angular/router';
-
-import { Student, Subject } from '../../../common/entities';
-import {NgForm, NgModel} from '@angular/forms';
+import { NgForm, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-shared-form',

@@ -5,17 +5,21 @@ import { FormsModule } from '@angular/forms';
 import {
   StudentsListComponent, StudentFormComponent, StudentPageComponent
 } from './components';
-import {FormComponent} from '../../shared/components';
+import { FormComponent, TableComponent } from '../../shared/components';
 
 import { StudentsRoutingModule } from './students-routing.module';
-import { StudentsServicesModule } from './students-services.module';
 
 @NgModule({
-  declarations: [ StudentsListComponent,  StudentFormComponent, StudentPageComponent, FormComponent ],
+  declarations: [
+    StudentsListComponent,
+    StudentFormComponent,
+    StudentPageComponent,
+    FormComponent,
+    TableComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
-    StudentsServicesModule,
     StudentsRoutingModule,
   ]
 })

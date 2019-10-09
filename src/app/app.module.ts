@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './root/app.component';
-import { NavigationComponent } from './shared/components';
+import { NavigationComponent, TableComponent } from './shared/components';
 import { ExportComponent, NotFoundComponent } from './components';
 
 import { StudentsModule } from './components/students/students.module';
