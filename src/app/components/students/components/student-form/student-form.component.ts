@@ -21,8 +21,11 @@ export class StudentFormComponent {
 
   public onSaveForm(form: NgForm): void {
     this.student = { id: undefined, ...form.value };
-    this.dataService.saveStudent(this.student);
-    this.location.back();
+    this.dataService.saveStudent(this.student)
+      .subscribe(
+        () => this.location.back(),
+        err => console.log(err)
+      );
   }
 
 }

@@ -1,5 +1,5 @@
 <nav>
-  <a href="#" *ngFor="let link of navigationLinks" routerLink="{{link | lowercase}}" routerLinkActive="active">
+  <a href="#" *ngFor="let link of navigationLinks" routerLink="{{link | lowercase}}" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
     {{link | titlecase}}
   </a>
 </nav>

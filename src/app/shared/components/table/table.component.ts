@@ -15,10 +15,11 @@ export class TableComponent implements OnInit {
   @Input () public options: TableOptions;
   @Input () public tableView: Array<object>;
 
+  // tslint:disable-next-line:no-empty
   constructor() {}
 
   public ngOnInit(): void {
-    console.log(this.options, this.tableView);
+    // console.log(this.options, this.tableView);
     this.tableHeaders = this.options.tableHeaders;
     this.tableClass = this.options.tableClass;
   }

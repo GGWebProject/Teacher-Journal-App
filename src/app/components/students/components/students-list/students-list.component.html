@@ -1,9 +1,7 @@
-<div class="wrapper">
-  <ng-container *ngIf="!!studentsTableView">
-    <app-table
-      [options]="studentsTableOptions"
-      [tableView]="studentsTableView"
-    ></app-table>
-  </ng-container>
-  <button class="students__button_add" (click)="onCreateStudent()" >Add new Student</button>
-</div>
+<ng-container *ngIf="!!studentsTableView">
+  <app-table
+    [options]="studentsTableOptions"
+    [tableView]="studentsTableView"
+  ></app-table>
+</ng-container>
+<button class="students__button_add" (click)="onCreateStudent()" >Add new Student</button>
