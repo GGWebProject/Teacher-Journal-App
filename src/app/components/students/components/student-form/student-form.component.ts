@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Location } from '@angular/common';
-// import { Observable } from 'rxjs';
 import { Student } from '../../../../common/entities';
 import { DataService } from '../../../../common/services/data.service';
 
@@ -15,8 +14,6 @@ export class StudentFormComponent {
 
   private student: Student;
 
-  // public student$: Observable<Array<Student>>;
-
   constructor(
     private location: Location,
     private dataService: DataService,
@@ -25,7 +22,6 @@ export class StudentFormComponent {
   public onSaveForm(form: NgForm): void {
     this.student = { id: undefined, ...form.value };
     this.dataService.saveStudent(this.student);
-      // .subscribe();
     this.location.back();
   }
 

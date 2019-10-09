@@ -7,6 +7,7 @@ import { retry, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
+
 export class DataService {
 
   private studentsUrl: string = 'http://localhost:3000/students';
@@ -21,9 +22,9 @@ export class DataService {
       .pipe(
         retry(3),
         tap(
-          data => console.log(data),
-          error => console.log(error),
-        )
+          data => console.log('Getting data: ', data),
+          err => console.log('Error', err)
+          ),
       );
   }
 

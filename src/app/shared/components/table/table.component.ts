@@ -1,4 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ITableHeader } from '../../../common/interfaces';
+import { TableOptions } from './models/table-options';
 
 @Component({
   selector: 'app-table',
@@ -7,15 +9,18 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class TableComponent implements OnInit {
 
-  // private tableHead
-  // private tableData
+  public tableHeaders: Array<ITableHeader>;
+  public tableClass: string;
 
-  @Input () public options: object;
+  @Input () public options: TableOptions;
+  @Input () public tableView: Array<object>;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-    console.log(this.options);
+  public ngOnInit(): void {
+    console.log(this.options, this.tableView);
+    this.tableHeaders = this.options.tableHeaders;
+    this.tableClass = this.options.tableClass;
   }
 
 }

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Student } from '../../../../common/entities';
 import { DataService } from '../../../../common/services/data.service';
 import '../../../../../../db/db.json';
-import { StudentListOptions } from './students-list.options';
+import { ITableHeader } from '../../../../shared/components/table/interfaces/itable-header';
+import { TableOptions } from '../../../../shared/components/table/models/table-options';
 
 @Component({
   selector: 'app-students-list',
@@ -13,8 +14,19 @@ import { StudentListOptions } from './students-list.options';
 })
 
 export class StudentsListComponent implements OnInit {
-  public studentsListOptions: StudentListOptions;
-  public studentsList: Array<Student>;
+
+  private studentsList$: Observable<Array<Student>>;
+  private studentTableHeaders: Array<ITableHeader> = [
+      {name: 'Id', property: 'id'},
+      {name: 'Name', property: 'firstName'},
+      {name: 'Last Name', property: 'lastName'},
+      {name: 'Address', property: 'address'},
+      {name: 'Description', property: 'description'}
+    ];
+  private studentTableClass: string = 'students';
+
+  public studentsTableOptions: TableOptions;
+  public studentsTableView: Array<Student>;
 
   constructor(
     private dataService: DataService,
@@ -27,15 +39,13 @@ export class StudentsListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.dataService
-      .getStudents()
-      .subscribe((students) => {
-                   this.studentsList = [...students];
-                   this.studentsListOptions = new StudentListOptions(this.studentsList);
+    this.studentsTableOptions = new TableOptions(this.studentTableHeaders, this.studentTableClass);
+    this.studentsList$ = this.dataService.getStudents();
+    this.studentsList$.subscribe(
+      data => {
+        this.studentsTableView = [...data];
       },
-                 err => console.log(err),
-                 () => console.log()
+      err => console.log(err),
     );
   }
-
 }
