@@ -1,7 +1,8 @@
 <app-shared-form
-  (formData)="onSaveForm($event)"
+  (saveForm)="onSaveForm($event)"
   [entity]="'student'"
   [submitButtonText]="'Save'"
+  #studentFormComponent
 >
   <label for="form__name">*Name</label>
   <input

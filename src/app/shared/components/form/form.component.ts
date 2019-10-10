@@ -16,7 +16,7 @@ export class FormComponent implements AfterViewInit {
   @Input() public entity: string;
   @Input() public submitButtonText: string;
 
-  @Output() public formData: EventEmitter<NgForm> = new EventEmitter<NgForm>();
+  @Output() public saveForm: EventEmitter<NgForm> = new EventEmitter<NgForm>();
 
   @ContentChildren(NgModel) public models: QueryList<NgModel>;
   @ViewChild(NgForm, {static: false}) public form: NgForm;
@@ -34,6 +34,6 @@ export class FormComponent implements AfterViewInit {
   }
 
   public onSaveForm(): void {
-    this.formData.emit(this.form);
+    this.saveForm.emit(this.form);
   }
 }

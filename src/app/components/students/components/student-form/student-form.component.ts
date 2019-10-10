@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Student } from '../../../../common/entities';
 import { DataService } from '../../../../common/services/data.service';
+import { ICanComponentDeactivate } from '../../../../common/interfaces/ican-component-deactivate';
 
 @Component({
   selector: 'app-student-form',
@@ -10,9 +11,11 @@ import { DataService } from '../../../../common/services/data.service';
   styleUrls: ['./student-form.component.sass']
 })
 
-export class StudentFormComponent {
+export class StudentFormComponent implements ICanComponentDeactivate {
 
   private student: Student;
+
+  @ViewChild('studentFormComponent', { static: false }) public studentFormComponent: NgForm;
 
   constructor(
     private location: Location,
@@ -26,6 +29,10 @@ export class StudentFormComponent {
         () => this.location.back(),
         err => console.log(err)
       );
+  }
+
+  public canDeactivate(): boolean {
+    return !this.studentFormComponent.form.dirty || window.confirm('You didn`t save the student. Are you sure you want to exit?');
   }
 
 }

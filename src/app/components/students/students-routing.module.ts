@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { StudentsListComponent, StudentFormComponent } from './components';
 import { StudentsComponent } from './students.component';
+import { CanDeactivateGuard } from '../../common/guards/can-diactivate.guard';
 
 const studentsRoutes: Routes = [
   {
@@ -22,7 +23,8 @@ const studentsRoutes: Routes = [
         component: StudentFormComponent,
         data: {
           breadcrumb: 'add student'
-        }
+        },
+        canDeactivate: [CanDeactivateGuard]
       }
     ]
   }
