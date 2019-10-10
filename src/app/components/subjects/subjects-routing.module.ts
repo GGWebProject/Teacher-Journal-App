@@ -5,7 +5,10 @@ import { SubjectListComponent } from './components/subject-list/subject-list.com
 const routes: Routes = [
   {
     path: 'subjects',
-    component: SubjectListComponent
+    component: SubjectListComponent,
+    data: {
+      breadcrumb: 'subjects'
+    },
   },
 ];
 

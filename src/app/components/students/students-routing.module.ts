@@ -8,14 +8,14 @@ const studentsRoutes: Routes = [
   {
     path: 'students',
     component: StudentsComponent,
+    data: {
+      breadcrumb: 'students'
+    },
     children: [
       {
         path: '',
         component: StudentsListComponent,
         pathMatch: 'full',
-        data: {
-          breadcrumb: 'students'
-        }
       },
       {
         path: 'add',
