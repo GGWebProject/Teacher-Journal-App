@@ -1,14 +1,36 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SubjectListComponent } from './components/subject-list/subject-list.component';
+import { SubjectsComponent } from './subjects.component';
+import { SubjectFormComponent, SubjectJournalComponent, SubjectsListComponent } from './components';
 
 const routes: Routes = [
   {
     path: 'subjects',
-    component: SubjectListComponent,
+    component: SubjectsComponent,
     data: {
       breadcrumb: 'subjects'
     },
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        component: SubjectsListComponent,
+      },
+      {
+        path: 'subject/:subjectId',
+        component: SubjectJournalComponent,
+        data: {
+          breadcrumb: 'Journal'
+        },
+      },
+      {
+        path: 'add',
+        component: SubjectFormComponent,
+        data: {
+          breadcrumb: 'Add subject'
+        },
+      }
+    ]
   },
 ];
 

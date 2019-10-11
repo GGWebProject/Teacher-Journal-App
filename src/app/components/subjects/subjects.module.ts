@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SubjectsRoutingModule } from './subjects-routing.module';
-import {SubjectListComponent} from './components/subject-list/subject-list.component';
+import { SubjectsListComponent, SubjectFormComponent, SubjectJournalComponent } from './components';
+import { SubjectsComponent } from './subjects.component';
 
 @NgModule({
-  declarations: [ SubjectListComponent ],
+  declarations: [ SubjectsListComponent, SubjectFormComponent, SubjectJournalComponent, SubjectsComponent ],
   imports: [
     CommonModule,
     SubjectsRoutingModule

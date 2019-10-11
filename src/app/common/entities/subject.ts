@@ -2,7 +2,7 @@ import { IStudentMark } from '../interfaces';
 
 export class Subject {
   constructor(
-    private id: number,
+    public id: number,
     public name: string,
     public teacher: string,
     public cabiner: number,

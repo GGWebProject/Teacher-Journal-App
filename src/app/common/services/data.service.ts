@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { Student } from '../entities';
-import { catchError, retry } from 'rxjs/operators';
+import { Student, Subject, SubjectList } from '../entities';
+import {catchError, retry, tap, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ import { catchError, retry } from 'rxjs/operators';
 export class DataService {
 
   private studentsUrl: string = 'http://localhost:3000/students';
+  private subjectsUrl: string = 'http://localhost:3000/subjects';
 
   constructor(
     private http: HttpClient,
@@ -26,6 +27,33 @@ export class DataService {
     }
 
     return throwError('Something bad happened; please try again later.');
+  }
+
+  private getSubjects(): Observable<Array<Subject>> {
+    return this.http
+      .get<Array<Subject>>(this.subjectsUrl)
+      .pipe(
+        retry(3),
+        tap(
+          data => console.log(data),
+          err => console.log(err)
+        ),
+        catchError(this.handleError)
+      );
+  }
+
+  public getSubjectsList(): Observable<Array<SubjectList>> {
+    return this.getSubjects().pipe(
+      map((subjects: Array<SubjectList>) => subjects.map(subject => new SubjectList(subject.id, subject.name, subject.description))),
+      catchError(this.handleError)
+    );
+  }
+
+  public getSubject(id: number): Observable<SubjectList> {
+    return this.getSubjects().pipe(
+      map((subjects: Array<SubjectList>) => subjects.find(subject => subject.id === id)),
+      catchError(this.handleError)
+    );
   }
 
   public getStudents(): Observable<Array<Student>> {

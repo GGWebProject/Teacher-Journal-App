@@ -1,0 +1,5 @@
+<div class="subjects" *ngIf="subjectsList">
+  <a class="subject" *ngFor="let subject of subjectsList" title="{{subject.description}}" [routerLink]="['./subject', subject.id]">
+    {{subject.name}}
+  </a>
+</div>
