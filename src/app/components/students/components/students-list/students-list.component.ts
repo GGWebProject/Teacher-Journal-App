@@ -17,11 +17,11 @@ export class StudentsListComponent implements OnInit {
 
   private studentsList$: Observable<Array<Student>>;
   private studentTableHeaders: Array<ITableHeader> = [
-      {name: 'Id', property: 'id'},
-      {name: 'Name', property: 'firstName'},
-      {name: 'Last Name', property: 'lastName'},
-      {name: 'Address', property: 'address'},
-      {name: 'Description', property: 'description'}
+      {label: 'Id', property: 'id'},
+      {label: 'Name', property: 'firstName'},
+      {label: 'Last Name', property: 'lastName'},
+      {label: 'Address', property: 'address'},
+      {label: 'Description', property: 'description'}
     ];
   private studentTableClass: string = 'students';
 

@@ -9,18 +9,21 @@ import { FormComponent, TableComponent } from '../../shared/components';
 import { StudentsRoutingModule } from './students-routing.module';
 
 @NgModule({
-  declarations: [
-    StudentsListComponent,
-    StudentFormComponent,
-    StudentPageComponent,
-    FormComponent,
-    TableComponent,
-    StudentsComponent,
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    StudentsRoutingModule,
-  ]
-})
+            declarations: [
+              StudentsListComponent,
+              StudentFormComponent,
+              StudentPageComponent,
+              FormComponent,
+              TableComponent,
+              StudentsComponent,
+            ],
+            exports: [
+              TableComponent
+            ],
+            imports: [
+              CommonModule,
+              FormsModule,
+              StudentsRoutingModule,
+            ]
+          })
 export class StudentsModule { }

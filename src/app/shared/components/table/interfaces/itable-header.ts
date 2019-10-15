@@ -1,4 +1,4 @@
 export interface ITableHeader {
-  name: string;
+  label: string;
   property: string;
 }

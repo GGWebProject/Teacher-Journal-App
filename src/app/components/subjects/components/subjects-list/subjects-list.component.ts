@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { DataService } from '../../../../common/services/data.service';
-import { Subject, SubjectList } from '../../../../common/entities';
+import { SubjectList } from '../../../../common/entities';
 
 @Component({
   selector: 'app-subject-list',

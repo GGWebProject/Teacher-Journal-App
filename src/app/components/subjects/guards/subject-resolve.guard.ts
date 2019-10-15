@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, Router} from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Subject } from '../../../common/entities';
 import { DataService } from '../../../common/services/data.service';
@@ -26,13 +26,13 @@ export class SubjectResolveGuard implements Resolve<Subject> {
             return subject;
           } else {
             this.router.navigate(['/subjects']);
-            return undefined;
+            return null;
           }
         }),
         take(1),
         catchError(() => {
           this.router.navigate(['/subjects']);
-          return of(undefined);
+          return of(null);
         })
       );
   }

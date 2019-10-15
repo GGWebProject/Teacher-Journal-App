@@ -7,6 +7,7 @@ export class Subject {
     public teacher: string,
     public cabiner: number,
     public description: string,
+    public dates: Array<string>,
     public students: Array<IStudentMark>
   ){}
 }

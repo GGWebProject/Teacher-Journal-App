@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Student, Subject, SubjectList } from '../entities';
-import {catchError, retry, tap, map} from 'rxjs/operators';
+import {catchError, retry, tap, map, delay} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +63,13 @@ export class DataService {
         retry(3),
         catchError(this.handleError)
       );
+  }
+
+  public getStudent(id: number): Observable<Student> {
+    return this.getStudents().pipe(
+      map((students: Array<Student>) => students.find(student => student.id === id)),
+      catchError(this.handleError)
+    );
   }
 
   public saveStudent(student: Student): Observable<Student | void> {
