@@ -7,6 +7,7 @@ import { SubjectsComponent } from './subjects.component';
 
 @NgModule({
   declarations: [ SubjectsListComponent, SubjectFormComponent, SubjectJournalComponent, SubjectsComponent ],
+  providers: [],
   imports: [
     CommonModule,
     SubjectsRoutingModule

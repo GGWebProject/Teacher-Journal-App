@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CanDeactivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CanDeactivate, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import {ICanComponentDeactivate} from '../interfaces/ican-component-deactivate';
+import { ICanComponentDeactivate } from '../interfaces/ican-component-deactivate';
 
 @Injectable({
   providedIn: 'root'
