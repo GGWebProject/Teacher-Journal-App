@@ -12,6 +12,7 @@ import { ExportComponent, NotFoundComponent } from './components';
 
 import { StudentsModule } from './components/students/students.module';
 import { SubjectsModule } from './components/subjects/subjects.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
             declarations: [
@@ -27,6 +28,7 @@ import { SubjectsModule } from './components/subjects/subjects.module';
               StudentsModule,
               SubjectsModule,
               AppRoutingModule,
+              BrowserAnimationsModule,
             ],
             providers: [],
             exports: [],
