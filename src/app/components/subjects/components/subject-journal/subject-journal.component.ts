@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../../../common/services/data.service';
-import {map, pluck} from 'rxjs/operators';
+import { map, pluck } from 'rxjs/operators';
 import { Subject } from '../../../../common/entities';
 import { TableOptions } from '../../../../shared/components/table/models/table-options';
 import { ITableHeader } from '../../../../shared/components/table/interfaces/itable-header';
 import { ISubjectStudent } from '../../../../common/interfaces';
-import {Observable, of} from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-subject-journal',
@@ -24,7 +24,7 @@ export class SubjectJournalComponent implements OnInit {
   private subjectTableClass: string = 'subject';
 
   public subjectTableOptions: TableOptions;
-  public subjectTableView: Array<object> = [];
+  public subjectTableView: Array<object>;
 
   constructor(
     private dataService: DataService,
@@ -43,7 +43,7 @@ export class SubjectJournalComponent implements OnInit {
     return tableHeaderDates;
   }
 
-  private createSubjectTableRow(student: ISubjectStudent): Observable<object> {
+  private createStudentInfo(student: ISubjectStudent): Observable<object> {
 
     const subjectTableRow: any = {
       id: undefined,
@@ -66,8 +66,8 @@ export class SubjectJournalComponent implements OnInit {
 
               student.marks.forEach((mark) => {
                 if (this.subject.dates.includes(mark.data)) {
-                  marksSum.push(mark.value);
-                  subjectTableRow[mark.data] = mark.value;
+                  marksSum.push(+mark.value);
+                  subjectTableRow[mark.data] = +mark.value;
                 }
               });
 
@@ -77,6 +77,14 @@ export class SubjectJournalComponent implements OnInit {
             }
             return subjectTableRow;
           }
+        )
+      );
+  }
+
+  private createSubjectTableRow(students: Array<ISubjectStudent>): Observable<Array<object>> {
+      return forkJoin(
+        students.map(
+          (student: ISubjectStudent) => this.createStudentInfo(student)
         )
       );
   }
@@ -97,14 +105,11 @@ export class SubjectJournalComponent implements OnInit {
           };
 
           this.subjectTableOptions = new TableOptions(tableOptions);
-          this.subjectTableView = [];
 
-          this.subject.students.forEach(
-            (student: ISubjectStudent) => {
-              this.createSubjectTableRow(student)
-                .subscribe(row => this.subjectTableView.push(row));
-            }
-          );
+          this.createSubjectTableRow(this.subject.students)
+            .subscribe(
+              res => this.subjectTableView = [...res],
+            );
         },
       );
   }

@@ -1,4 +1,4 @@
-import { IStudentMark } from '../interfaces';
+import { ISubjectStudent } from '../interfaces';
 
 export class Subject {
   constructor(
@@ -8,6 +8,6 @@ export class Subject {
     public cabiner: number,
     public description: string,
     public dates: Array<string>,
-    public students: Array<IStudentMark>
-  ){}
+    public students: Array<ISubjectStudent>
+  ) {}
 }

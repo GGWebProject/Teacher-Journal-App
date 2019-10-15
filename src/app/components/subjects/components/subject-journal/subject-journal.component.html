@@ -1,5 +1,5 @@
 <h2>Journal of {{subject.name}} subject</h2>
-<ng-container *ngIf="subjectTableView.length !== 0">
+<ng-container *ngIf="!!subjectTableView">
   <app-table
     [options]="subjectTableOptions"
     [tableView]="subjectTableView"
