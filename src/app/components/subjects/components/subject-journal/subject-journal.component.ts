@@ -5,7 +5,6 @@ import {map, pluck} from 'rxjs/operators';
 import { Subject } from '../../../../common/entities';
 import { TableOptions } from '../../../../shared/components/table/models/table-options';
 import { ITableHeader } from '../../../../shared/components/table/interfaces/itable-header';
-import { StudentsListService } from '../../../students/services/students-list.service';
 import { ISubjectStudent } from '../../../../common/interfaces';
 import {Observable, of} from 'rxjs';
 
@@ -29,35 +28,25 @@ export class SubjectJournalComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private studentsListService: StudentsListService,
     private route: ActivatedRoute,
   ) {}
 
-  public ngOnInit(): void {
-    this.route.data.pipe(pluck('subject'))
-      .subscribe(
-        data => {
-          this.subject = { ...data };
+  private getSubjectTableDates (subject: Subject): Array<ITableHeader> {
+    let tableHeaderDates: Array<ITableHeader> = [];
 
-          const datesTableHeaders: Array<ITableHeader> = this.studentsListService.getSubjectTableDates(this.subject);
-          this.subjectTableHeaders = this.subjectTableHeaders.concat(datesTableHeaders);
-          this.subjectTableOptions = new TableOptions(this.subjectTableHeaders, this.subjectTableClass);
+    if (subject.dates.length === 0) {
+      return tableHeaderDates;
+    }
 
-          this.subjectTableView = [];
+    tableHeaderDates = subject.dates.map( (date: string) => { return { label: date.slice(0, date.lastIndexOf('.')), property: date}; });
 
-          this.subject.students.forEach(
-            (student: ISubjectStudent) => {
-              this.createSubjectTableRow(student)
-                .subscribe(row => this.subjectTableView.push(row));
-            }
-          );
-        },
-      );
+    return tableHeaderDates;
   }
 
-  public createSubjectTableRow(student: ISubjectStudent): Observable<object> {
+  private createSubjectTableRow(student: ISubjectStudent): Observable<object> {
 
     const subjectTableRow: any = {
+      id: undefined,
       firstName: '',
       lastName: '',
       averageMark: undefined,
@@ -69,6 +58,7 @@ export class SubjectJournalComponent implements OnInit {
           data => {
             subjectTableRow.lastName = data.lastName;
             subjectTableRow.firstName = data.firstName;
+            subjectTableRow.id = student.id;
 
             if (student.marks.length !== 0) {
 
@@ -88,6 +78,34 @@ export class SubjectJournalComponent implements OnInit {
             return subjectTableRow;
           }
         )
+      );
+  }
+
+  public ngOnInit(): void {
+    this.route.data.pipe(pluck('subject'))
+      .subscribe(
+        data => {
+          this.subject = { ...data };
+
+          const datesTableHeaders: Array<ITableHeader> = this.getSubjectTableDates(this.subject);
+          this.subjectTableHeaders = this.subjectTableHeaders.concat(datesTableHeaders);
+          const tableOptions: TableOptions = {
+            tableHeaders: this.subjectTableHeaders,
+            tableClass: this.subjectTableClass,
+            isEditData: true,
+            isRemoveData: true,
+          };
+
+          this.subjectTableOptions = new TableOptions(tableOptions);
+          this.subjectTableView = [];
+
+          this.subject.students.forEach(
+            (student: ISubjectStudent) => {
+              this.createSubjectTableRow(student)
+                .subscribe(row => this.subjectTableView.push(row));
+            }
+          );
+        },
       );
   }
 

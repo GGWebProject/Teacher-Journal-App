@@ -19,9 +19,17 @@ export class TableComponent implements OnInit {
   constructor() {}
 
   public ngOnInit(): void {
-    // console.log(this.options, this.tableView);
+    console.log(this.options, this.tableView);
     this.tableHeaders = this.options.tableHeaders;
     this.tableClass = this.options.tableClass;
+  }
+
+  public getClass(): string {
+    let resultClass: string = 'table';
+    const { isEditData, isRemoveData } = this.options;
+    resultClass = this.tableClass ? `${resultClass} table_${this.tableClass}` : resultClass;
+    resultClass = (isEditData || isRemoveData) ? `${resultClass} table_edit` : resultClass;
+    return resultClass;
   }
 
 }

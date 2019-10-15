@@ -1,4 +1,4 @@
-<table [ngClass]="tableClass ? tableClass + '__table table' : 'table'">
+<table [ngClass]="getClass()">
   <thead>
     <tr>
       <th *ngFor="let header of tableHeaders">
@@ -7,10 +7,14 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of tableView">
+    <tr *ngFor="let row of tableView" [attr.data-row-id]="row.hasOwnProperty('id') ? row.id : null">
       <td *ngFor="let props of tableHeaders">
         {{row[props.property]}}
       </td>
+      <div class="table__controls" *ngIf="options.isEditData || options.isRemoveData">
+        <button *ngIf="options.isEditData">EDIT</button>
+        <button *ngIf="options.isRemoveData">Remove</button>
+      </div>
     </tr>
   </tbody>
 </table>

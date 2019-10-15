@@ -39,7 +39,13 @@ export class StudentsListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.studentsTableOptions = new TableOptions(this.studentTableHeaders, this.studentTableClass);
+    const tableOptions: TableOptions = {
+      tableHeaders: this.studentTableHeaders,
+      tableClass: this.studentTableClass,
+      isEditData: true,
+      isRemoveData: true,
+    }
+    this.studentsTableOptions = new TableOptions(tableOptions);
     this.studentsList$ = this.dataService.getStudents();
     this.studentsList$.subscribe(
       data => {
