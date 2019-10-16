@@ -6,6 +6,7 @@ import { SubjectsListComponent, SubjectFormComponent, SubjectJournalComponent } 
 import { SubjectsComponent } from './subjects.component';
 import { SubjectResolveGuard } from './guards/subject-resolve.guard';
 import {StudentsModule} from '../students/students.module';
+import {MatProgressSpinnerModule} from '@angular/material';
 
 @NgModule({
   declarations: [ SubjectsListComponent, SubjectFormComponent, SubjectJournalComponent, SubjectsComponent ],
@@ -13,7 +14,8 @@ import {StudentsModule} from '../students/students.module';
             imports: [
               CommonModule,
               SubjectsRoutingModule,
-              StudentsModule
+              StudentsModule,
+              MatProgressSpinnerModule
             ]
           })
 export class SubjectsModule { }

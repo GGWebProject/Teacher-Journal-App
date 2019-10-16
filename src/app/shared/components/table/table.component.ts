@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ITableHeader } from '../../../common/interfaces';
 import { TableOptions } from './models/table-options';
 import { MatSort, MatTableDataSource } from '@angular/material';
@@ -8,28 +8,33 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.sass']
 })
-export class TableComponent implements OnInit {
+
+export class TableComponent implements OnInit, AfterViewInit {
 
   public tableHeaders: Array<ITableHeader>;
   public tableClass: string;
   public displayedColumns: Array<string>;
+  public columnsToDisplay: Array<string>;
   public dataSource: any;
 
   @Input () public options: TableOptions;
   @Input () public tableView: Array<object>;
 
-  @ViewChild (MatSort, { static : true }) public sort: MatSort;
+  @ViewChildren (MatSort) public sortQueryList:  QueryList<MatSort>;
 
   // tslint:disable-next-line:no-empty
   constructor() {}
+
+  public ngAfterViewInit(): void {
+    this.dataSource.sort = this.sortQueryList.first;
+  }
 
   public ngOnInit(): void {
     this.tableHeaders = this.options.tableHeaders;
     this.tableClass = this.options.tableClass;
     this.displayedColumns = this.tableHeaders.map(header => header.property);
-
+    this.columnsToDisplay = this.displayedColumns.slice();
     this.dataSource = new MatTableDataSource(this.tableView);
-    this.dataSource.sort = this.sort;
   }
 
   public getClass(): string {
@@ -42,6 +47,11 @@ export class TableComponent implements OnInit {
 
   public applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(this.dataSource.filteredData);
+  }
+
+  public addColumn(): void {
+    this.columnsToDisplay.push('id');
   }
 
 }

@@ -1,13 +1,26 @@
-<ng-container *ngIf="options.isSearchField">
-  <mat-form-field>
-    <input id="searchField" matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
-  </mat-form-field>
+<mat-form-field *ngIf="options.isSearchField">
+  <input id="searchField" matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+</mat-form-field>
+<ng-container *ngIf="dataSource.filteredData.length > 0; else elseBlock">
+  <div class="table__wrapper">
+    <button class="table__btn table__btn_add-column" (click)="addColumn()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" [ngClass]="getClass()" matSort>
+      <ng-container matColumnDef="{{header.property}}" *ngFor="let header of tableHeaders">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{header.label}}
+          <button class="table__btn table__btn_remove-column">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </th>
+        <td mat-cell *matCellDef="let data"> {{data[header.property]}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay;" [attr.data-student-id]="row.hasOwnProperty('id') ? row.id : null"></tr>
+    </table>
+  </div>
 </ng-container>
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" [ngClass]="getClass()" matSort>
-  <ng-container matColumnDef="{{header.property}}" *ngFor="let header of tableHeaders">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{header.label}} </th>
-    <td mat-cell *matCellDef="let data"> {{data[header.property]}} </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [attr.data-student-id]="row.hasOwnProperty('id') ? row.id : null"></tr>
-</table>
+<ng-template #elseBlock>
+  <p>Sorry! But we didn`t found data :(</p>
+</ng-template>

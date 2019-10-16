@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../../../common/services/data.service';
-import { map, pluck } from 'rxjs/operators';
+import {delay, map, pluck} from 'rxjs/operators';
 import { Subject } from '../../../../common/entities';
 import { TableOptions } from '../../../../shared/components/table/models/table-options';
 import { ITableHeader } from '../../../../shared/components/table/interfaces/itable-header';
@@ -90,7 +90,7 @@ export class SubjectJournalComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.route.data.pipe(pluck('subject'))
+    this.route.data.pipe(delay(1000), pluck('subject'))
       .subscribe(
         data => {
           this.subject = { ...data };
@@ -102,7 +102,7 @@ export class SubjectJournalComponent implements OnInit {
             tableClass: this.subjectTableClass,
             isEditData: true,
             isRemoveData: true,
-            isSearchField: true,
+            isSearchField: false,
           };
 
           this.subjectTableOptions = new TableOptions(tableOptions);

@@ -1,7 +1,10 @@
-<ng-container *ngIf="!!studentsTableView">
+<ng-container *ngIf="!!studentsTableView; else elseBlock">
   <app-table
     [options]="studentsTableOptions"
     [tableView]="studentsTableView"
   ></app-table>
+  <button class="students__button_add" (click)="onCreateStudent()" >Add new Student</button>
 </ng-container>
-<button class="students__button_add" (click)="onCreateStudent()" >Add new Student</button>
+<ng-template #elseBlock>
+  <mat-spinner *ngIf="!studentsTableView"></mat-spinner>
+</ng-template>

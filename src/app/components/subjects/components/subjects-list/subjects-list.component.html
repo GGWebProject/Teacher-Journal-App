@@ -1,5 +1,10 @@
-<div class="subjects" *ngIf="subjectsList">
-  <a class="subject" *ngFor="let subject of subjectsList" title="{{subject.description}}" [routerLink]="['./subject', subject.id]">
-    {{subject.name}}
-  </a>
-</div>
+<ng-container *ngIf="subjectsList; else elseBlock">
+  <div class="subjects">
+    <a class="subject" *ngFor="let subject of subjectsList" title="{{subject.description}}" [routerLink]="['./subject', subject.id]">
+      {{subject.name}}
+    </a>
+  </div>
+</ng-container>
+<ng-template #elseBlock>
+  <mat-spinner></mat-spinner>
+</ng-template>

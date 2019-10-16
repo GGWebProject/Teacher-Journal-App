@@ -7,7 +7,14 @@ import {
 import { StudentsComponent } from './students.component';
 import { FormComponent, TableComponent } from '../../shared/components';
 import { StudentsRoutingModule } from './students-routing.module';
-import {MatFormFieldModule, MatInputModule, MatSortModule, MatTableModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatFormFieldModule, MatIconModule,
+  MatInputModule,
+  MatProgressSpinnerModule,
+  MatSortModule,
+  MatTableModule
+} from '@angular/material';
 
 @NgModule({
             declarations: [
@@ -29,6 +36,9 @@ import {MatFormFieldModule, MatInputModule, MatSortModule, MatTableModule} from 
               MatSortModule,
               MatFormFieldModule,
               MatInputModule,
+              MatProgressSpinnerModule,
+              MatButtonModule,
+              MatIconModule,
             ]
           })
 export class StudentsModule { }

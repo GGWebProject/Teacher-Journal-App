@@ -1,7 +1,10 @@
-<h2>Journal of {{subject.name}} subject</h2>
-<ng-container *ngIf="!!subjectTableView">
+<ng-container *ngIf="!!subjectTableView; else elseBlock">
+  <h2>Journal of {{subject.name}} subject</h2>
   <app-table
     [options]="subjectTableOptions"
     [tableView]="subjectTableView"
   ></app-table>
 </ng-container>
+<ng-template #elseBlock>
+  <mat-spinner></mat-spinner>
+</ng-template>
