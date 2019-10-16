@@ -40,4 +40,8 @@ export class TableComponent implements OnInit {
     return resultClass;
   }
 
+  public applyFilter(filterValue: string): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
 }

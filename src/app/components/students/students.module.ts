@@ -7,7 +7,7 @@ import {
 import { StudentsComponent } from './students.component';
 import { FormComponent, TableComponent } from '../../shared/components';
 import { StudentsRoutingModule } from './students-routing.module';
-import { MatSortModule, MatTableModule } from '@angular/material';
+import {MatFormFieldModule, MatInputModule, MatSortModule, MatTableModule} from '@angular/material';
 
 @NgModule({
             declarations: [
@@ -27,6 +27,8 @@ import { MatSortModule, MatTableModule } from '@angular/material';
               StudentsRoutingModule,
               MatTableModule,
               MatSortModule,
+              MatFormFieldModule,
+              MatInputModule,
             ]
           })
 export class StudentsModule { }

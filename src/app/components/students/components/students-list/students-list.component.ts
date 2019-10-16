@@ -44,7 +44,8 @@ export class StudentsListComponent implements OnInit {
       tableClass: this.studentTableClass,
       isEditData: true,
       isRemoveData: true,
-    }
+      isSearchField: true,
+    };
     this.studentsTableOptions = new TableOptions(tableOptions);
     this.studentsList$ = this.dataService.getStudents();
     this.studentsList$.subscribe(

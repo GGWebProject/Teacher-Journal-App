@@ -1,3 +1,8 @@
+<ng-container *ngIf="options.isSearchField">
+  <mat-form-field>
+    <input id="searchField" matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+  </mat-form-field>
+</ng-container>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" [ngClass]="getClass()" matSort>
   <ng-container matColumnDef="{{header.property}}" *ngFor="let header of tableHeaders">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> {{header.label}} </th>

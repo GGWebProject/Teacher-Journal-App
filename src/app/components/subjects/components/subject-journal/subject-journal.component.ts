@@ -102,6 +102,7 @@ export class SubjectJournalComponent implements OnInit {
             tableClass: this.subjectTableClass,
             isEditData: true,
             isRemoveData: true,
+            isSearchField: true,
           };
 
           this.subjectTableOptions = new TableOptions(tableOptions);

@@ -5,4 +5,5 @@ export interface ITableOptions {
   tableClass: string;
   isEditData?: boolean;
   isRemoveData?: boolean;
+  isSearchField?: boolean;
 }
