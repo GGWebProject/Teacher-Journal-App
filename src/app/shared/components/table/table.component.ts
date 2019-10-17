@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ITableHeader } from '../../../common/interfaces';
 import { TableOptions } from './models/table-options';
 import { MatSort, MatTableDataSource } from '@angular/material';
@@ -11,6 +11,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 
 export class TableComponent implements OnInit, AfterViewInit {
 
+  private tempColumnNumb: number = 0;
   public tableHeaders: Array<ITableHeader>;
   public tableClass: string;
   public displayedColumns: Array<string>;
@@ -20,13 +21,13 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Input () public options: TableOptions;
   @Input () public tableView: Array<object>;
 
-  @ViewChildren (MatSort) public sortQueryList:  QueryList<MatSort>;
+  @ViewChild (MatSort, {static: false}) public sort: MatSort;
 
   // tslint:disable-next-line:no-empty
   constructor() {}
 
   public ngAfterViewInit(): void {
-    this.dataSource.sort = this.sortQueryList.first;
+    this.dataSource.sort = this.sort;
   }
 
   public ngOnInit(): void {
@@ -47,11 +48,26 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   public applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(this.dataSource.filteredData);
   }
 
-  public addColumn(): void {
-    this.columnsToDisplay.push('id');
+  public onAddColumn(): void {
+    const tempNumb: number = this.tempColumnNumb++;
+    const tempColumnName: string = `tempColumn${tempNumb}`;
+    this.tableHeaders = this.tableHeaders.concat({label: 'column name', property: tempColumnName});
+    this.displayedColumns = [...this.displayedColumns, tempColumnName];
+  }
+
+  public onEditTableData(event: Event): void {
+    console.log('edit', event);
+  }
+
+  public onRemoveColumn(ev: Event, columnProp: string): void {
+    ev.stopPropagation();
+    const tableData: Array<object> = [...this.dataSource.data];
+    this.tableHeaders = this.tableHeaders.filter(view => view.property !== columnProp);
+    this.displayedColumns = this.displayedColumns.filter(columnName => columnName !== columnProp);
+    tableData.forEach(item => delete item[columnProp]);
+    this.dataSource = new MatTableDataSource(tableData);
   }
 
 }

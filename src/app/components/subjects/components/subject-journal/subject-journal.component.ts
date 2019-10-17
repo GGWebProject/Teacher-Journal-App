@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { delay, map, pluck } from 'rxjs/operators';
+import { forkJoin, Observable } from 'rxjs';
 import { DataService } from '../../../../common/services/data.service';
-import {delay, map, pluck} from 'rxjs/operators';
 import { Subject } from '../../../../common/entities';
 import { TableOptions } from '../../../../shared/components/table/models/table-options';
 import { ITableHeader } from '../../../../shared/components/table/interfaces/itable-header';
 import { ISubjectStudent } from '../../../../common/interfaces';
-import { forkJoin, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-subject-journal',
@@ -90,7 +90,7 @@ export class SubjectJournalComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.route.data.pipe(delay(1000), pluck('subject'))
+    this.route.data.pipe(delay(400), pluck('subject'))
       .subscribe(
         data => {
           this.subject = { ...data };

@@ -3,21 +3,21 @@
 </mat-form-field>
 <ng-container *ngIf="dataSource.filteredData.length > 0; else elseBlock">
   <div class="table__wrapper">
-    <button class="table__btn table__btn_add-column" (click)="addColumn()">
+    <button class="table__btn table__btn_add-column" (click)="onAddColumn()">
       <mat-icon>add</mat-icon>
     </button>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" [ngClass]="getClass()" matSort>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" [ngClass]="getClass()" matSort (dblclick)="onEditTableData($event)">
       <ng-container matColumnDef="{{header.property}}" *ngFor="let header of tableHeaders">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           {{header.label}}
-          <button class="table__btn table__btn_remove-column">
+          <button class="table__btn table__btn_remove-column" (click)="onRemoveColumn($event, header.property)">
             <mat-icon>delete_forever</mat-icon>
           </button>
         </th>
         <td mat-cell *matCellDef="let data"> {{data[header.property]}} </td>
       </ng-container>
-      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-      <tr mat-row *matRowDef="let row; columns: columnsToDisplay;" [attr.data-student-id]="row.hasOwnProperty('id') ? row.id : null"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [attr.data-student-id]="row.hasOwnProperty('id') ? row.id : null"></tr>
     </table>
   </div>
 </ng-container>
