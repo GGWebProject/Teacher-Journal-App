@@ -17,11 +17,11 @@ export class StudentsListComponent implements OnInit {
 
   private studentsList$: Observable<Array<Student>>;
   private studentTableHeaders: Array<ITableHeader> = [
-      {label: 'Id', property: 'id'},
-      {label: 'Name', property: 'firstName'},
-      {label: 'Last Name', property: 'lastName'},
-      {label: 'Address', property: 'address'},
-      {label: 'Description', property: 'description'}
+      {label: 'Id', property: 'id', isDisableEdit: true, isDisableDelete: true},
+      {label: 'Name', property: 'firstName', isDisableEdit: true, isDisableDelete: true},
+      {label: 'Last Name', property: 'lastName', isDisableEdit: true, isDisableDelete: true},
+      {label: 'Address', property: 'address', isDisableEdit: true, isDisableDelete: true},
+      {label: 'Description', property: 'description', isDisableEdit: true, isDisableDelete: true}
     ];
   private studentTableClass: string = 'students';
 
@@ -43,7 +43,6 @@ export class StudentsListComponent implements OnInit {
       tableHeaders: this.studentTableHeaders,
       tableClass: this.studentTableClass,
       isEditData: true,
-      isRemoveData: true,
       isSearchField: true,
     };
     this.studentsTableOptions = new TableOptions(tableOptions);

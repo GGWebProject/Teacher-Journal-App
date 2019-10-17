@@ -36,13 +36,14 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.displayedColumns = this.tableHeaders.map(header => header.property);
     this.columnsToDisplay = this.displayedColumns.slice();
     this.dataSource = new MatTableDataSource(this.tableView);
+    console.log(this.tableHeaders);
   }
 
   public getClass(): string {
     let resultClass: string = 'table';
-    const { isEditData, isRemoveData } = this.options;
+    const { isEditData } = this.options;
     resultClass = this.tableClass ? `${resultClass} table_${this.tableClass}` : resultClass;
-    resultClass = (isEditData || isRemoveData) ? `${resultClass} table_edit` : resultClass;
+    resultClass = isEditData ? `${resultClass} table_edit` : resultClass;
     return resultClass;
   }
 
@@ -57,10 +58,6 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.displayedColumns = [...this.displayedColumns, tempColumnName];
   }
 
-  public onEditTableData(event: Event): void {
-    console.log('edit', event);
-  }
-
   public onRemoveColumn(ev: Event, columnProp: string): void {
     ev.stopPropagation();
     const tableData: Array<object> = [...this.dataSource.data];
@@ -68,6 +65,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.displayedColumns = this.displayedColumns.filter(columnName => columnName !== columnProp);
     tableData.forEach(item => delete item[columnProp]);
     this.dataSource = new MatTableDataSource(tableData);
+    this.dataSource.sort = this.sort;
   }
 
 }

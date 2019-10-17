@@ -17,9 +17,9 @@ export class SubjectJournalComponent implements OnInit {
 
   private subject: Subject;
   private subjectTableHeaders: Array<ITableHeader> = [
-    { label: 'Name', property: 'firstName' },
-    { label: 'Last Name', property: 'lastName' },
-    { label: 'Average mark', property: 'averageMark' }
+    { label: 'Name', property: 'firstName', isDisableEdit: true, isDisableDelete: true},
+    { label: 'Last Name', property: 'lastName', isDisableEdit: true, isDisableDelete: true },
+    { label: 'Average mark', property: 'averageMark', isDisableEdit: true, isDisableDelete: true }
   ];
   private subjectTableClass: string = 'subject';
 
@@ -38,7 +38,12 @@ export class SubjectJournalComponent implements OnInit {
       return tableHeaderDates;
     }
 
-    tableHeaderDates = subject.dates.map( (date: string) => { return { label: date.slice(0, date.lastIndexOf('.')), property: date}; });
+    tableHeaderDates = subject.dates.map( (date: string) => {
+      return {
+               label: date.slice(0, date.lastIndexOf('.')), property: date
+             };
+      }
+    );
 
     return tableHeaderDates;
   }
@@ -101,7 +106,7 @@ export class SubjectJournalComponent implements OnInit {
             tableHeaders: this.subjectTableHeaders,
             tableClass: this.subjectTableClass,
             isEditData: true,
-            isRemoveData: true,
+            isAddColumn: true,
             isSearchField: false,
           };
 

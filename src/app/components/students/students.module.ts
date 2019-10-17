@@ -15,6 +15,7 @@ import {
   MatSortModule,
   MatTableModule
 } from '@angular/material';
+import {EditTextDirective} from '../../shared/directives/edit-text.directive';
 
 @NgModule({
             declarations: [
@@ -24,6 +25,7 @@ import {
               FormComponent,
               TableComponent,
               StudentsComponent,
+              EditTextDirective,
             ],
             exports: [
               TableComponent

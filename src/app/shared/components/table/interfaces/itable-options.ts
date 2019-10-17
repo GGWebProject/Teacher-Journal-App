@@ -4,6 +4,6 @@ export interface ITableOptions {
   tableHeaders: Array<ITableHeader>;
   tableClass: string;
   isEditData?: boolean;
-  isRemoveData?: boolean;
+  isAddColumn?: boolean;
   isSearchField?: boolean;
 }
