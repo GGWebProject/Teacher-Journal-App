@@ -51,10 +51,10 @@ export class SubjectJournalComponent implements OnInit {
   private createStudentInfo(student: ISubjectStudent): Observable<object> {
 
     const subjectTableRow: any = {
-      id: undefined,
+      id: null,
       firstName: '',
       lastName: '',
-      averageMark: undefined,
+      averageMark: null,
     };
 
     return this.dataService.getStudent(student.id)

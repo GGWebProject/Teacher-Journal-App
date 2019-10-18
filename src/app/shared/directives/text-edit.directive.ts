@@ -1,9 +1,9 @@
-import {Directive, Renderer2, ElementRef, OnInit, HostListener, AfterViewInit} from '@angular/core';
+import {Directive, Renderer2, ElementRef, HostListener, AfterViewInit} from '@angular/core';
 
 @Directive({
-  selector: '[appEditText]'
+  selector: '[appTextEdit]'
 })
-export class EditTextDirective implements AfterViewInit {
+export class TextEditDirective implements AfterViewInit {
 
   constructor(
     private renderer: Renderer2,
@@ -17,7 +17,7 @@ export class EditTextDirective implements AfterViewInit {
 
   @HostListener('click', ['$event'])
     private onClick (event: MouseEvent): void {
-      event.stopImmediatePropagation();
+      event.stopPropagation();
     }
 
   private renderEditField(element: HTMLElement): void {
