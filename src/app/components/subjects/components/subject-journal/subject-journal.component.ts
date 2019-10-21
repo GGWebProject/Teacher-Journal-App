@@ -5,7 +5,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { DataService } from '../../../../common/services/data.service';
 import { Subject } from '../../../../common/entities';
 import { TableOptions } from '../../../../shared/components/table/models/table-options';
-import { ITableHeader } from '../../../../shared/components/table/interfaces/itable-header';
+import { ITableHeader } from '../../../../shared/components/table/interfaces';
 import { ISubjectStudent } from '../../../../common/interfaces';
 
 @Component({
@@ -38,9 +38,9 @@ export class SubjectJournalComponent implements OnInit {
       return tableHeaderDates;
     }
 
-    tableHeaderDates = subject.dates.map( (date: string) => {
+    tableHeaderDates = subject.dates.map( (data: string) => {
       return {
-               label: date.slice(0, date.lastIndexOf('.')), property: date
+               label: data.slice(0, data.lastIndexOf('.')), property: data
              };
       }
     );
@@ -105,6 +105,13 @@ export class SubjectJournalComponent implements OnInit {
           const tableOptions: TableOptions = {
             tableHeaders: this.subjectTableHeaders,
             tableClass: this.subjectTableClass,
+            highLightOptions: {
+              isEnable: true,
+              middleValue: 8,
+              compareCellClass: 'averageMark',
+              moreAndEqualValueColor: 'lightgreen',
+              lessValueColor: 'lightblue',
+            },
             isEditData: true,
             isAddColumn: true,
             isSearchField: false,

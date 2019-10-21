@@ -11,7 +11,7 @@
       <ng-container matColumnDef="{{header.property}}" *ngFor="let header of tableHeaders">
 
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          <span appTextEdit *ngIf="!header.isDisableEdit">{{header.label}}</span>
+          <span contenteditable="true" *ngIf="!header.isDisableEdit" appStopPropagation>{{header.label}}</span>
           <span *ngIf="header.isDisableEdit">{{header.label}}</span>
           <button
             class="table__btn table__btn_remove-column"
@@ -21,8 +21,8 @@
           </button>
         </th>
 
-        <ng-container *ngIf="options.isEditData; else elseTdEdit">
-          <td mat-cell *matCellDef="let data" appTextEdit>{{data[header.property]}}</td>
+        <ng-container *ngIf="options.isEditData && !header.isDisableEdit; else elseTdEdit">
+          <td mat-cell *matCellDef="let data" contenteditable="true">{{data[header.property]}}</td>
         </ng-container>
         <ng-template #elseTdEdit>
           <td mat-cell *matCellDef="let data">{{data[header.property]}}</td>
@@ -30,7 +30,7 @@
 
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [appHighLight]="options.highLightOptions"></tr>
 <!--      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [attr.data-student-id]="row.hasOwnProperty('id') ? row.id : null"></tr>-->
     </table>
   </div>

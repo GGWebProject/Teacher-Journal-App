@@ -36,7 +36,8 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.displayedColumns = this.tableHeaders.map(header => header.property);
     this.columnsToDisplay = this.displayedColumns.slice();
     this.dataSource = new MatTableDataSource(this.tableView);
-    console.log(this.tableHeaders);
+    // console.log(this.tableHeaders);
+    console.log(this.dataSource.data);
   }
 
   public getClass(): string {

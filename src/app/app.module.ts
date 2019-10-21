@@ -21,7 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
               ExportComponent,
               NotFoundComponent,
               BreadcrumbsComponent,
-            ],
+                          ],
             imports: [
               BrowserModule,
               HttpClientModule,

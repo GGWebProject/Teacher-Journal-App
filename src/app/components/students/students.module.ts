@@ -15,7 +15,9 @@ import {
   MatSortModule,
   MatTableModule
 } from '@angular/material';
-import {TextEditDirective} from '../../shared/directives/text-edit.directive';
+import {HighLightDirective} from '../../shared/components/table/directives/hight-light.directive';
+import {AppModule} from '../../app.module';
+import {StopPropagationDirective} from '../../shared/directives/stop-propagation.directive';
 
 @NgModule({
             declarations: [
@@ -25,7 +27,8 @@ import {TextEditDirective} from '../../shared/directives/text-edit.directive';
               FormComponent,
               TableComponent,
               StudentsComponent,
-              TextEditDirective,
+              HighLightDirective,
+              StopPropagationDirective,
             ],
             exports: [
               TableComponent
