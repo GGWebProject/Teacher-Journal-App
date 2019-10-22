@@ -11,7 +11,7 @@
       <ng-container matColumnDef="{{header.property}}" *ngFor="let header of tableHeaders">
 
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          <span contenteditable="true" *ngIf="!header.isDisableEdit" appStopPropagation>{{header.label}}</span>
+          <span *ngIf="!header.isDisableEdit" appHeaderEdit (change)="changeHeader(header, $event)">{{header.label}}</span>
           <span *ngIf="header.isDisableEdit">{{header.label}}</span>
           <button
             class="table__btn table__btn_remove-column"

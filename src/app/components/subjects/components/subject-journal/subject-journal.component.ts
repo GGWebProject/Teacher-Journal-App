@@ -40,7 +40,7 @@ export class SubjectJournalComponent implements OnInit {
 
     tableHeaderDates = subject.dates.map( (data: string) => {
       return {
-               label: data.slice(0, data.lastIndexOf('.')), property: data
+               label: data, property: data
              };
       }
     );

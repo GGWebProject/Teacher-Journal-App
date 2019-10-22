@@ -15,7 +15,6 @@ export class TableComponent implements OnInit, AfterViewInit {
   public tableHeaders: Array<ITableHeader>;
   public tableClass: string;
   public displayedColumns: Array<string>;
-  public columnsToDisplay: Array<string>;
   public dataSource: any;
 
   @Input () public options: TableOptions;
@@ -26,6 +25,26 @@ export class TableComponent implements OnInit, AfterViewInit {
   // tslint:disable-next-line:no-empty
   constructor() {}
 
+  private saveTableHeader(colLabel: string, colProp: string = colLabel, currentColProp: string = colProp): void {
+    // if include - change header and column, else - create new column;
+    // if you change column - 3rd parameter is required
+
+    if (this.displayedColumns.includes(currentColProp)) {
+      const oldColIndex: number = this.displayedColumns.indexOf(currentColProp);
+      const tableFullHeader: Array<ITableHeader> = [...this.tableHeaders];
+      const tableColumnsNames: Array<string> = [...this.displayedColumns];
+
+      tableFullHeader.splice(oldColIndex, 1, {label: colLabel, property: colProp});
+      tableColumnsNames.splice(oldColIndex, 1, colProp);
+
+      this.tableHeaders = tableFullHeader;
+      this.displayedColumns = tableColumnsNames;
+    } else {
+      this.tableHeaders = this.tableHeaders.concat({label: colLabel, property: colProp});
+      this.displayedColumns = [...this.displayedColumns, colProp];
+    }
+  }
+
   public ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
@@ -34,9 +53,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.tableHeaders = this.options.tableHeaders;
     this.tableClass = this.options.tableClass;
     this.displayedColumns = this.tableHeaders.map(header => header.property);
-    this.columnsToDisplay = this.displayedColumns.slice();
     this.dataSource = new MatTableDataSource(this.tableView);
-    // console.log(this.tableHeaders);
     console.log(this.dataSource.data);
   }
 
@@ -53,10 +70,8 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   public onAddColumn(): void {
-    const tempNumb: number = this.tempColumnNumb++;
-    const tempColumnName: string = `tempColumn${tempNumb}`;
-    this.tableHeaders = this.tableHeaders.concat({label: 'column name', property: tempColumnName});
-    this.displayedColumns = [...this.displayedColumns, tempColumnName];
+    const tempColumnName: string = `tempColumn${this.tempColumnNumb++}`;
+    this.saveTableHeader('column name', tempColumnName);
   }
 
   public onRemoveColumn(ev: Event, columnProp: string): void {
@@ -69,4 +84,9 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+  public changeHeader(header: ITableHeader, ev: Event): void {
+    const evTarget: HTMLInputElement  = ev.target as HTMLInputElement;
+    const { property: currentColPropName } = header;
+    this.saveTableHeader(evTarget.value, evTarget.value, currentColPropName);
+  }
 }

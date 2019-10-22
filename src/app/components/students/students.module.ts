@@ -16,8 +16,7 @@ import {
   MatTableModule
 } from '@angular/material';
 import {HighLightDirective} from '../../shared/components/table/directives/hight-light.directive';
-import {AppModule} from '../../app.module';
-import {StopPropagationDirective} from '../../shared/directives/stop-propagation.directive';
+import {HeaderEditDirective} from '../../shared/components/table/directives/header-edit.directive';
 
 @NgModule({
             declarations: [
@@ -28,7 +27,7 @@ import {StopPropagationDirective} from '../../shared/directives/stop-propagation
               TableComponent,
               StudentsComponent,
               HighLightDirective,
-              StopPropagationDirective,
+              HeaderEditDirective,
             ],
             exports: [
               TableComponent
