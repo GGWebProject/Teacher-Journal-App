@@ -72,7 +72,7 @@ export class SubjectJournalComponent implements OnInit {
               student.marks.forEach((mark) => {
                 if (this.subject.dates.includes(mark.data)) {
                   marksSum.push(+mark.value);
-                  subjectTableRow[mark.data] = +mark.value;
+                  subjectTableRow[mark.data] = `${mark.value}`;
                 }
               });
 
