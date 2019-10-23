@@ -13,7 +13,6 @@ import { ExportComponent, NotFoundComponent } from './components';
 import { StudentsModule } from './components/students/students.module';
 import { SubjectsModule } from './components/subjects/subjects.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderEditDirective } from './shared/components/table/directives/header-edit.directive';
 
 @NgModule({
             declarations: [

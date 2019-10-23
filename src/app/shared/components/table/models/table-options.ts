@@ -7,6 +7,8 @@ export class TableOptions {
   public isAddColumn?: boolean = false;
   public isEditData?: boolean = false;
   public isSearchField?: boolean = false;
+  public validationPatternHeaders?: Array<string> = [];
+  public validationPatternData?: Array<string> = [];
 
   constructor(props: ITableOptions) {
     this.tableHeaders = props.tableHeaders;
@@ -15,5 +17,7 @@ export class TableOptions {
     this.isAddColumn = props.isAddColumn;
     this.isEditData = props.isEditData;
     this.isSearchField = props.isSearchField;
+    this.validationPatternHeaders = props.validationPatternHeaders;
+    this.validationPatternData = props.validationPatternData;
   }
 }

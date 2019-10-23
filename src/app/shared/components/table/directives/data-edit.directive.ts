@@ -1,14 +1,12 @@
 import {AfterViewInit, Directive, ElementRef, HostListener, Input, Renderer2} from '@angular/core';
 
 @Directive({
-  selector: '[appHeaderEdit]'
+  selector: '[appDataEdit]'
 })
-export class HeaderEditDirective implements AfterViewInit {
 
-  private delSelfTableHeaders: Array<string> = [];
+export class DataEditDirective implements AfterViewInit {
 
-  @Input('appHeaderEdit') public tableHeaders?: Array<string>;
-  @Input() public validationHeaders?: Array<string> = [];
+  @Input() public validationData?: Array<string> = [];
 
   constructor(
     private renderer: Renderer2,
@@ -26,8 +24,8 @@ export class HeaderEditDirective implements AfterViewInit {
   }
 
   private validationInput(input: HTMLInputElement): void {
-    const regExp: RegExp = new RegExp(this.validationHeaders[0] || '.*');
-    if (regExp.test(input.value) && !this.delSelfTableHeaders.includes(input.value)) {
+    const regExp: RegExp = new RegExp(this.validationData[0] || '.*');
+    if (regExp.test(input.value)) {
       this.renderer.removeClass(input, 'invalid');
       this.renderer.addClass(input, 'valid');
     } else {
@@ -39,7 +37,6 @@ export class HeaderEditDirective implements AfterViewInit {
   private renderEditField(element: HTMLElement): void {
     const elementText: string = element.innerText;
     const input: HTMLInputElement = this.renderer.createElement('input');
-    this.delSelfTableHeaders = this.tableHeaders.filter(header => header !== elementText);
     this.renderer.setProperty(input, 'value', elementText);
     element.innerText = '';
     element.appendChild(input);

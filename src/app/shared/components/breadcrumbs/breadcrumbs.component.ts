@@ -14,8 +14,8 @@ export class BreadcrumbsComponent implements OnInit {
 
   public breadcrumbs: Array<Breadcrumb> = [];
 
-  @Input () public breadcrumbName: string;
-  @Input () public breadcrumbClass?: string = '';
+  @Input() public breadcrumbName: string;
+  @Input() public breadcrumbClass?: string = '';
 
   constructor(
     private router: Router,

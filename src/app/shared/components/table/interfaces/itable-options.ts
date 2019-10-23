@@ -8,4 +8,6 @@ export interface ITableOptions {
   isEditData?: boolean;
   isAddColumn?: boolean;
   isSearchField?: boolean;
+  validationPatternHeaders?: Array<string>;
+  validationPatternData?: Array<string>;
 }

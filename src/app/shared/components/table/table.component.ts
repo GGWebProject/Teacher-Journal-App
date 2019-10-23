@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IStandardTable, ITableHeader, ITableChange } from './interfaces';
 import { TableOptions } from './models/table-options';
 import { MatSort, MatTableDataSource } from '@angular/material';
@@ -25,10 +25,12 @@ export class TableComponent implements OnInit, AfterViewInit {
   public displayedColumns: Array<string>;
   public dataSource: any;
 
-  @Input () public options: TableOptions;
-  @Input () public tableView: Array<object>;
+  @Input() public options: TableOptions;
+  @Input() public tableView: Array<object>;
+  @Output() public onSaveData?: EventEmitter<IStandardTable> = new EventEmitter<IStandardTable>();
 
-  @ViewChild (MatSort, {static: false}) public sort: MatSort;
+  @ViewChild(MatSort, {static: false}) public sort: MatSort;
+  @ViewChild('tableSearchField', {static: false}) public searchField: ElementRef;
 
   // tslint:disable-next-line:no-empty
   constructor() {}
@@ -48,6 +50,9 @@ export class TableComponent implements OnInit, AfterViewInit {
     change.tableDisplayCols = [...this.displayedColumns];
     this.tableChanges = this.tableChanges.concat(new TableChange(change));
     this.tableChangeIndex++;
+    if (this.searchField && this.searchField.nativeElement.value) {
+      this.applyFilter(this.searchField.nativeElement.value);
+    }
   }
 
   get isTableChange(): boolean {
@@ -109,9 +114,12 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   public changeHeader(header: ITableHeader, ev: Event): void {
-    const evTarget: HTMLInputElement  = ev.target as HTMLInputElement;
+    const evTargetInput: HTMLInputElement  = ev.target as HTMLInputElement;
     const { property: currentColPropName } = header;
-    this.saveTableHeader(evTarget.value, evTarget.value, currentColPropName);
+
+    if (!evTargetInput.classList.contains('invalid')) {
+      this.saveTableHeader(evTargetInput.value, evTargetInput.value, currentColPropName);
+    }
   }
 
   public onAddColumn(): void {
@@ -146,6 +154,11 @@ export class TableComponent implements OnInit, AfterViewInit {
     const editRowData: Object = {...rowData};
     const tableRowIndex: number = tableData.findIndex(data => JSON.stringify(data) === JSON.stringify(rowData));
     const currentData: number | string = evTarget.value;
+
+    if (evTarget.classList.contains('invalid')) {
+      return;
+    }
+
     if (evTarget.value) {
       editRowData[header.property] = currentData;
     } else {
@@ -187,11 +200,23 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   public onSave(): void {
-    console.log('save');
+    this.onSaveData.emit(this.getTableState(this.tableChangeIndex) as IStandardTable);
   }
 
   public ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
+  }
+
+  public getClass(): string {
+    let resultClass: string = 'table';
+    const { isEditData } = this.options;
+    resultClass = this.tableClass ? `${resultClass} table_${this.tableClass}` : resultClass;
+    resultClass = isEditData ? `${resultClass} table_edit` : resultClass;
+    return resultClass;
+  }
+
+  public applyFilter(filterValue: string): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   public ngOnInit(): void {
@@ -213,17 +238,5 @@ export class TableComponent implements OnInit, AfterViewInit {
       tableDisplayCols: null,
     };
     this.setChanges(tableDataChange);
-  }
-
-  public getClass(): string {
-    let resultClass: string = 'table';
-    const { isEditData } = this.options;
-    resultClass = this.tableClass ? `${resultClass} table_${this.tableClass}` : resultClass;
-    resultClass = isEditData ? `${resultClass} table_edit` : resultClass;
-    return resultClass;
-  }
-
-  public applyFilter(filterValue: string): void {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

@@ -17,6 +17,7 @@ import {
 } from '@angular/material';
 import {HighLightDirective} from '../../shared/components/table/directives/hight-light.directive';
 import {HeaderEditDirective} from '../../shared/components/table/directives/header-edit.directive';
+import {DataEditDirective} from '../../shared/components/table/directives/data-edit.directive';
 
 @NgModule({
             declarations: [
@@ -28,6 +29,7 @@ import {HeaderEditDirective} from '../../shared/components/table/directives/head
               StudentsComponent,
               HighLightDirective,
               HeaderEditDirective,
+              DataEditDirective,
             ],
             exports: [
               TableComponent

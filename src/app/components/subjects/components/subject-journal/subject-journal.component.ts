@@ -5,7 +5,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { DataService } from '../../../../common/services/data.service';
 import { Subject } from '../../../../common/entities';
 import { TableOptions } from '../../../../shared/components/table/models/table-options';
-import { ITableHeader } from '../../../../shared/components/table/interfaces';
+import {IStandardTable, ITableHeader} from '../../../../shared/components/table/interfaces';
 import { ISubjectStudent } from '../../../../common/interfaces';
 
 @Component({
@@ -114,7 +114,9 @@ export class SubjectJournalComponent implements OnInit {
             },
             isEditData: true,
             isAddColumn: true,
-            isSearchField: false,
+            isSearchField: true,
+            validationPatternHeaders: ['^\\d{2}\\.\\d{2}$'],
+            validationPatternData: ['^\\d{1,2}$|^.{0}$'],
           };
 
           this.subjectTableOptions = new TableOptions(tableOptions);
@@ -125,6 +127,10 @@ export class SubjectJournalComponent implements OnInit {
             );
         },
       );
+  }
+
+  public saveData(data: IStandardTable): void {
+    console.log(data);
   }
 
 }

@@ -3,6 +3,7 @@
   <app-table
     [options]="subjectTableOptions"
     [tableView]="subjectTableView"
+    (onSaveData)="saveData($event)"
   ></app-table>
 </ng-container>
 <ng-template #elseBlock>
