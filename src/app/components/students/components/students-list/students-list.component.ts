@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import {forkJoin, Observable} from 'rxjs';
 import { Student } from '../../../../common/entities';
 import { DataService } from '../../../../common/services/data.service';
 import '../../../../../../db/db.json';
-import { ITableHeader } from '../../../../shared/components/table/interfaces/itable-header';
-import { TableOptions } from '../../../../shared/components/table/models/table-options';
+import { ITableHeader, IStandardTable, TableOptions } from '../../../../shared/components/table';
+import * as _ from 'lodash';
+import {ISubjectStudent} from '../../../../common/interfaces';
 
 @Component({
   selector: 'app-students-list',
@@ -33,6 +34,13 @@ export class StudentsListComponent implements OnInit {
     private router: Router,
   ) {}
 
+  private compareStudentsArrays(newArr: Array<Student>, oldArr: Array<Student>): Array<Student> {
+    return newArr.filter(newStud => {
+      const equalOldStud: Student = oldArr.find(oldStud => oldStud.id === newStud.id);
+      return !_.isEqual(newStud, equalOldStud);
+    });
+  }
+
   public onCreateStudent(): void {
     const link: Array<string> = ['/students/add'];
     this.router.navigate(link);
@@ -53,6 +61,19 @@ export class StudentsListComponent implements OnInit {
         this.studentsTableView = [...data];
       },
       err => console.log(err),
+    );
+  }
+
+  public saveData(data: IStandardTable): void {
+    const newStudents: Array<Student> = data.tableData;
+    const diffStudent: Array<Student> = this.compareStudentsArrays(newStudents, this.studentsTableView);
+    forkJoin(
+      diffStudent.map(
+        (student: Student) => this.dataService.updateStudent(student)
+      )
+    ).subscribe(
+      () => this.router.navigate['/students'],
+      err => console.log(err)
     );
   }
 }

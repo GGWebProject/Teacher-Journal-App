@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { delay, map, pluck } from 'rxjs/operators';
 import { forkJoin, Observable } from 'rxjs';
 import { DataService } from '../../../../common/services/data.service';
 import { Subject } from '../../../../common/entities';
 import { TableOptions } from '../../../../shared/components/table/models/table-options';
-import {IStandardTable, ITableHeader} from '../../../../shared/components/table/interfaces';
-import { ISubjectStudent } from '../../../../common/interfaces';
+import { IStandardTable, ITableHeader } from '../../../../shared/components/table/interfaces';
+import {IMark, ISubjectStudent} from '../../../../common/interfaces';
 
 @Component({
   selector: 'app-subject-journal',
@@ -29,6 +29,7 @@ export class SubjectJournalComponent implements OnInit {
   constructor(
     private dataService: DataService,
     private route: ActivatedRoute,
+    private router: Router,
   ) {}
 
   private getSubjectTableDates (subject: Subject): Array<ITableHeader> {
@@ -70,9 +71,9 @@ export class SubjectJournalComponent implements OnInit {
               let marksSum: Array<number> = [];
 
               student.marks.forEach((mark) => {
-                if (this.subject.dates.includes(mark.data)) {
+                if (this.subject.dates.includes(mark.date)) {
                   marksSum.push(+mark.value);
-                  subjectTableRow[mark.data] = `${mark.value}`;
+                  subjectTableRow[mark.date] = `${mark.value}`;
                 }
               });
 
@@ -131,6 +132,22 @@ export class SubjectJournalComponent implements OnInit {
 
   public saveData(data: IStandardTable): void {
     console.log(data);
+    const subjectDates: Array<string> = data.tableDisplayCols.filter(col => !isNaN(parseInt(col, 10)));
+    const subjectStudents: Array<ISubjectStudent> = data.tableData.map(student => {
+      const id: number = student.id;
+      const marks: Array<IMark> = subjectDates.filter(date => !!student[date]).map(date => ({date: date, value: student[date]}));
+      return {
+        id,
+        marks,
+      };
+    });
+    const newSubject: Subject = {...this.subject, dates: subjectDates, students: subjectStudents};
+
+    this.dataService.updateSubjectJournal(newSubject)
+      .subscribe(
+      () => this.router.navigate[`/subject/${newSubject.id}`],
+      err => console.log(err)
+    );
   }
 
 }

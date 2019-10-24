@@ -2,6 +2,7 @@
   <app-table
     [options]="studentsTableOptions"
     [tableView]="studentsTableView"
+    (onSaveData)="saveData($event)"
   ></app-table>
   <button
     mat-raised-button

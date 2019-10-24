@@ -1,9 +1,9 @@
 import {Component, ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Location } from '@angular/common';
 import { Student } from '../../../../common/entities';
 import { DataService } from '../../../../common/services/data.service';
 import { ICanComponentDeactivate } from '../../../../common/interfaces/ican-component-deactivate';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-student-form',
@@ -18,7 +18,7 @@ export class StudentFormComponent implements ICanComponentDeactivate {
   @ViewChild('studentFormComponent', { static: false }) public studentFormComponent: NgForm;
 
   constructor(
-    private location: Location,
+    private router: Router,
     private dataService: DataService,
   ) { }
 
@@ -26,7 +26,7 @@ export class StudentFormComponent implements ICanComponentDeactivate {
     this.student = { id: undefined, ...form.value };
     this.dataService.saveStudent(this.student)
       .subscribe(
-        () => this.location.back(),
+        () => this.router.navigate(['/students']),
         err => console.log(err)
       );
   }

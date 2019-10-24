@@ -73,7 +73,6 @@ export class DataService {
   }
 
   public saveStudent(student: Student): Observable<Student | void> {
-
     const body: string = JSON.stringify({...student});
     const options: object = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -83,6 +82,37 @@ export class DataService {
       .post<Student>(this.studentsUrl, body, options)
       .pipe(
         retry(3),
+        catchError(this.handleError)
+      );
+  }
+
+  public updateStudent(student: Student): Observable<Student | void> {
+    console.log(student);
+    const body: string = JSON.stringify({...student});
+    const options: object = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http
+      .put<Student>(`${this.studentsUrl}/${student.id}`, body, options)
+      .pipe(
+        retry(3),
+        tap(_ => console.log(`updated Student id=${student.id}`)),
+        catchError(this.handleError)
+      );
+  }
+
+  public updateSubjectJournal(subject: Subject): Observable<Subject | void> {
+    const body: string = JSON.stringify({...subject});
+    const options: object = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http
+      .put<Subject>(`${this.subjectsUrl}/${subject.id}`, body, options)
+      .pipe(
+        retry(3),
+        tap(_ => console.log(`updated Subject id=${subject.id}`)),
         catchError(this.handleError)
       );
   }

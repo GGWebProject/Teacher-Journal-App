@@ -2,6 +2,6 @@ import { ITableHeader } from './itable-header';
 
 export interface IStandardTable {
   tableHeaders: Array<ITableHeader>;
-  tableData: Array<object>;
+  tableData: Array<any>;
   tableDisplayCols: Array<string>;
 }

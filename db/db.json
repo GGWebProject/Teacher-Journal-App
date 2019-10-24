@@ -4,28 +4,28 @@
       "id": 0,
       "firstName": "Vitaly",
       "lastName": "Hantarenka",
-      "address": "Sharangovicha st., 48",
-      "description": "test desctiprion"
+      "address": "Sharangovicha st., 483",
+      "description": "33"
     },
     {
       "id": 1,
       "firstName": "Test",
       "lastName": "Testovich",
-      "address": "Testovaya st., 99",
-      "description": "testovii desctiprion"
+      "address": "Testovaya st., 993",
+      "description": "33"
     },
     {
       "firstName": "Гонтаренко",
       "lastName": "Александрович",
       "address": "Улица Шаранговича, 48, 463",
-      "description": "eeeeqweqewqewqewq",
+      "description": "3",
       "id": 2
     },
     {
       "firstName": "Гонтаренко",
       "lastName": "Александрович",
       "address": "Улица Шаранговича, 48, 463",
-      "description": "qweqweqweqweqweqweqewqweqewqweqwe",
+      "description": "3",
       "id": 3
     },
     {
@@ -62,43 +62,29 @@
       "address": "Улица Шаранговича, 48, 463",
       "description": "eeeeqweqewqewqewq",
       "id": 8
+    },
+    {
+      "firstName": "Гонтаренко",
+      "lastName": "Александрович",
+      "address": "Улица Шаранговича, 48, 463",
+      "description": "eeeeqweqewqewqewq5654684848",
+      "id": 9
+    },
+    {
+      "firstName": "Гонтаренко",
+      "lastName": "Александрович",
+      "address": "Улица Шаранговича, 48, 463",
+      "description": "3123123123123213213",
+      "id": 10
     }
   ],
   "subjects": [
     {
       "id": 0,
-      "name": "Physics",
-      "teacher": "First teacher",
-      "cabiner": 9,
-      "description": "test description of subject 1",
-      "dates": [
-        "11.06",
-        "12.06"
-      ],
-      "students": [
-        {
-          "id": 1,
-          "marks": [
-            {
-              "data": "11.06",
-              "value": "10"
-            },
-            {
-              "data": "12.06",
-              "value": "5"
-            }
-          ]
-        },
-        {
-          "id": 2,
-          "marks": [
-            {
-              "data": "11.06",
-              "value": "10"
-            }
-          ]
-        }
-      ]
+      "firstName": "Vitaly",
+      "lastName": "Hantarenka",
+      "address": "Sharangovicha st., 48",
+      "description": "test desctiprion3"
     },
     {
       "id": 1,
@@ -115,7 +101,7 @@
           "id": 1,
           "marks": [
             {
-              "data": "12.06",
+              "date": "12.06",
               "value": "5"
             }
           ]
@@ -137,7 +123,7 @@
           "id": 0,
           "marks": [
             {
-              "data": "12.06",
+              "date": "12.06",
               "value": "5"
             }
           ]
@@ -146,7 +132,7 @@
           "id": 3,
           "marks": [
             {
-              "data": "11.06",
+              "date": "11.06",
               "value": "10"
             }
           ]
