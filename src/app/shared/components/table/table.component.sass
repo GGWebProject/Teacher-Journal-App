@@ -1,12 +1,46 @@
-table
+.table__wrapper
+  position: relative
+
+.table
   width: 100%
+  margin: 20px 0 20px
   td
     cursor: default
+
   input
     &.invalid
       border-color: red
     &.valid
       border-color: green
+
+.table__btn
+  border: none
+  margin: 0
+  padding: 0
+  cursor: pointer
+  transition: all .3s
+  &_add-column
+    position: absolute
+    top: 0
+    right: 0
+    transform: translate(50%, -50%)
+  &_remove-column
+    margin: 0 10px
+    &:hover
+      border-radius: 50%
+      background-color: #d3d3d35e
+
+  &_save-table
+    color: #333333
+    display: block
+    margin: 0 0 0 auto
+
+.table__changes-nav
+  position: absolute
+  top: 0
+  left: 0
+  transform: translateY(-100%)
+
 .edit-element
   text-decoration: underline
   cursor: text

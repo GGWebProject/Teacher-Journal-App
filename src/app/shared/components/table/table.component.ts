@@ -1,8 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { IStandardTable, ITableHeader, ITableChange } from './interfaces';
-import { TableOptions } from './models/table-options';
 import { MatSort, MatTableDataSource } from '@angular/material';
-import { TableChange } from './models/table-change';
+import { IStandardTable, ITableHeader, ITableChange } from './interfaces';
+import { TableOptions, TableChange } from './models';
 
 @Component({
   selector: 'app-table',
@@ -45,11 +44,15 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   private setChanges(change: ITableChange): void {
-    change.tableData = [...this.dataSource.data];
-    change.tableHeaders = [...this.tableHeaders];
+    change.tableData = this.dataSource.data.map(data => ({...data}));
+    change.tableHeaders = this.tableHeaders.map(header => ({...header}));
     change.tableDisplayCols = [...this.displayedColumns];
     this.tableChanges = this.tableChanges.concat(new TableChange(change));
-    this.tableChangeIndex++;
+    this.tableChangeIndex = this.tableChangeIndex === this.tableChanges.length - 2 ?
+      this.tableChangeIndex + 1
+      :
+      this.tableChanges.length - 1;
+
     if (this.searchField && this.searchField.nativeElement.value) {
       this.applyFilter(this.searchField.nativeElement.value);
     }
@@ -96,16 +99,24 @@ export class TableComponent implements OnInit, AfterViewInit {
 
     if (this.displayedColumns.includes(currentColProp)) {
       const oldColIndex: number = this.displayedColumns.indexOf(currentColProp);
-      const tableFullHeader: Array<ITableHeader> = [...this.tableHeaders];
+      const tableData: Array<object> = this.dataSource.data.map(data => ({...data}));
+      const tableFullHeader: Array<ITableHeader> = this.tableHeaders.map(header => ({...header}));
       const tableColumnsNames: Array<string> = [...this.displayedColumns];
       tableHeaderChange.type = 'thChange';
 
-      tableFullHeader.splice(oldColIndex, 1, {label: colLabel, property: colProp});
+      tableFullHeader.splice(oldColIndex, 1, {label: colLabel, property: colProp, isEditColumnData: true});
       tableColumnsNames.splice(oldColIndex, 1, colProp);
 
+      tableData.forEach(data => {
+        const dataValue: number | string = data[currentColProp];
+        data[colProp] = dataValue;
+        delete data[currentColProp];
+      });
+
+      this.applyTableData(tableData);
       this.applyTableHeaders(tableFullHeader, tableColumnsNames, tableHeaderChange);
     } else {
-      const tableFullHeader: Array<ITableHeader> = this.tableHeaders.concat({label: colLabel, property: colProp});
+      const tableFullHeader: Array<ITableHeader> = this.tableHeaders.concat({label: colLabel, property: colProp, isEditColumnData: true});
       const tableColumnsNames: Array<string> = [...this.displayedColumns, colProp];
       tableHeaderChange.type = 'colCreate';
 
@@ -129,7 +140,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   public onRemoveColumn(ev: Event, columnProp: string): void {
     ev.stopPropagation();
-    const tableData: Array<object> = [...this.dataSource.data];
+    const tableData: Array<object> = this.dataSource.data.map(data => ({...data}));
     const tableDataChange: ITableChange = {
       type: 'colDelete',
       rowIndex: null,
@@ -149,15 +160,20 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   public changeTableData(header: ITableHeader, ev: Event, rowData: Object, colTableIndex: number): void {
-    const evTarget: HTMLInputElement  = ev.target as HTMLInputElement;
-    const tableData: Array<object> = [...this.dataSource.data];
-    const editRowData: Object = {...rowData};
-    const tableRowIndex: number = tableData.findIndex(data => JSON.stringify(data) === JSON.stringify(rowData));
-    const currentData: number | string = evTarget.value;
+    const evTarget: HTMLInputElement = ev.target as HTMLInputElement;
+    let tableData: Array<object>;
+    let editRowData: Object;
+    let tableRowIndex: number;
+    let currentData: number | string;
 
     if (evTarget.classList.contains('invalid')) {
       return;
     }
+
+    tableData = this.dataSource.data.map(data => ({...data}));
+    editRowData = {...rowData};
+    tableRowIndex = tableData.findIndex(data => JSON.stringify(data) === JSON.stringify(rowData));
+    currentData = evTarget.value;
 
     if (evTarget.value) {
       editRowData[header.property] = currentData;
@@ -179,24 +195,41 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.applyTableData(tableData, tableDataChange);
   }
 
-  public applyPrevChange(): void {
-    if (this.tableChangeIndex === 0) {
-      return;
+  public moveToChange(str: string): void {
+
+    if (str === 'next') {
+
+      if (this.tableChangeIndex === this.tableChanges.length - 1) {
+        return;
+      }
+
+      ++this.tableChangeIndex;
+
+    } else if (str === 'prev') {
+
+      if (this.tableChangeIndex === 0) {
+        return;
+      }
+
+      --this.tableChangeIndex;
     }
 
-    const { tableData, tableHeaders, tableDisplayCols } = this.getTableState(--this.tableChangeIndex) as IStandardTable;
-    this.applyTableData(tableData);
-    this.applyTableHeaders(tableHeaders, tableDisplayCols);
+    this.applyChange();
   }
 
-  public applyNextChange(): void {
-    if (this.tableChangeIndex === this.tableChanges.length - 1) {
-      return;
+  public applyChange(index: number = this.tableChangeIndex): void {
+
+    if (this.searchField && this.searchField.nativeElement.value) {
+      this.applyFilter(this.searchField.nativeElement.value);
     }
 
-    const { tableData, tableHeaders, tableDisplayCols } = this.getTableState(++this.tableChangeIndex) as IStandardTable;
+    const { tableData, tableHeaders, tableDisplayCols } = this.getTableState(index) as IStandardTable;
     this.applyTableData(tableData);
     this.applyTableHeaders(tableHeaders, tableDisplayCols);
+
+    if (this.searchField && this.searchField.nativeElement.value) {
+      this.applyFilter(this.searchField.nativeElement.value);
+    }
   }
 
   public onSave(): void {
@@ -224,8 +257,8 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.tableClass = this.options.tableClass;
     this.displayedColumns = this.tableHeaders.map(header => header.property);
     this.dataSource = new MatTableDataSource(this.tableView);
-    this.standardTable.tableData = [...this.dataSource.data];
-    this.standardTable.tableHeaders = [...this.tableHeaders];
+    this.standardTable.tableData = this.dataSource.data.map(data => ({...data}));
+    this.standardTable.tableHeaders = this.tableHeaders.map(header => ({...header}));
     this.standardTable.tableDisplayCols = [...this.displayedColumns];
 
     const tableDataChange: ITableChange = {

@@ -4,16 +4,45 @@
 
 <ng-container *ngIf="dataSource.filteredData.length > 0; else elseBlock">
   <div class="table__wrapper">
-    <button class="table__btn table__btn_add-column" (click)="onAddColumn()" *ngIf="options.isAddColumn">
+    <button
+      mat-mini-fab
+      color="primary"
+      matTooltip="Add new column"
+      matTooltipPosition="below"
+      class="table__btn table__btn_add-column"
+      (click)="onAddColumn()"
+      *ngIf="options.isAddColumn">
       <mat-icon>add</mat-icon>
     </button>
+    <div class="table__changes-nav" *ngIf="options.isEditData">
+      <button
+        mat-icon-button
+        color="primary"
+        matTooltip="Previous Table State"
+        matTooltipPosition="below"
+        [disabled]="tableChangeIndex < 1"
+        class="table__btn table__btn_prev-change"
+        (click)="moveToChange('prev')">
+        <mat-icon>undo</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="primary"
+        matTooltip="Next Table State"
+        matTooltipPosition="below"
+        [disabled]="tableChangeIndex === tableChanges.length - 1"
+        class="table__btn table__btn_next-change"
+        (click)="moveToChange('next')">
+        <mat-icon>redo</mat-icon>
+      </button>
+    </div>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" [ngClass]="getClass()" matSort>
       <ng-container matColumnDef="{{header.property}}" *ngFor="let header of tableHeaders; let colIndex = index;">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           <span
-            *ngIf="!header.isDisableEdit; else elseTH"
+            *ngIf="options.isEditData && !header.isDisableEdit; else elseTH"
             [appHeaderEdit]="displayedColumns"
-            [validationHeaders]="options.validationPatternHeaders"
+            [validationData]="options.validationPatternHeaders"
             (change)="changeHeader(header, $event)">
             {{header.label}}
           </span>
@@ -21,6 +50,8 @@
             <span>{{header.label}}</span>
           </ng-template>
           <button
+            mat-icon-button
+            color="warn"
             class="table__btn table__btn_remove-column"
             *ngIf="options.isEditData && !header.isDisableDelete"
             (click)="onRemoveColumn($event, header.property)">
@@ -28,9 +59,9 @@
           </button>
         </th>
 
-        <ng-container *ngIf="options.isEditData && !header.isDisableEdit; else elseTdEdit">
+        <ng-container *ngIf="options.isEditData && header.isEditColumnData; else elseTdEdit">
           <td mat-cell *matCellDef="let data"
-              appDataEdit
+              appHeaderEdit
               [validationData]="options.validationPatternData"
               (change)="changeTableData(header, $event, data, colIndex)"
           >{{data[header.property]}}</td>
@@ -44,24 +75,16 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" [appHighLight]="options.highLightOptions"></tr>
     </table>
 
-    <button class="table__btn table__btn_save-table" (click)="onSave()" *ngIf="isTableChange">
+    <button
+      mat-raised-button
+      color="accent"
+      class="table__btn table__btn_save-table"
+      matTooltip="Save table"
+      matTooltipPosition="below"
+      (click)="onSave()"
+      *ngIf="isTableChange">
       <mat-icon>save</mat-icon>
     </button>
-    <div class="table__changes-nav" *ngIf="tableChanges.length > 1">
-      <button
-        [disabled]="tableChangeIndex < 1"
-        class="table__btn table__btn_prev-change"
-        (click)="applyPrevChange()">
-        <mat-icon>skip_previous</mat-icon>
-      </button>
-      <button
-        [disabled]="tableChangeIndex === tableChanges.length - 1"
-        class="table__btn table__btn_next-change"
-        (click)="applyNextChange()">
-        <mat-icon>skip_next</mat-icon>
-      </button>
-    </div>
-
   </div>
 </ng-container>
 

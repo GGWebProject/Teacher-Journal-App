@@ -3,7 +3,13 @@
     [options]="studentsTableOptions"
     [tableView]="studentsTableView"
   ></app-table>
-  <button class="students__button_add" (click)="onCreateStudent()" >Add new Student</button>
+  <button
+    mat-raised-button
+    color="primary"
+    class="students__button_add"
+    (click)="onCreateStudent()">
+    Add new student
+  </button>
 </ng-container>
 <ng-template #elseBlock>
   <mat-spinner *ngIf="!studentsTableView"></mat-spinner>

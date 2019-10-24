@@ -17,11 +17,11 @@ export class StudentsListComponent implements OnInit {
 
   private studentsList$: Observable<Array<Student>>;
   private studentTableHeaders: Array<ITableHeader> = [
-      {label: 'Id', property: 'id', isDisableEdit: true, isDisableDelete: true},
-      {label: 'Name', property: 'firstName', isDisableEdit: true, isDisableDelete: true},
-      {label: 'Last Name', property: 'lastName', isDisableEdit: true, isDisableDelete: true},
-      {label: 'Address', property: 'address', isDisableEdit: true, isDisableDelete: true},
-      {label: 'Description', property: 'description', isDisableEdit: true, isDisableDelete: true}
+      {label: 'Id', property: 'id', isDisableEdit: true, isDisableDelete: true, isEditColumnData: false},
+      {label: 'Name', property: 'firstName', isDisableEdit: true, isDisableDelete: true, isEditColumnData: true},
+      {label: 'Last Name', property: 'lastName', isDisableEdit: true, isDisableDelete: true, isEditColumnData: true},
+      {label: 'Address', property: 'address', isDisableEdit: true, isDisableDelete: true, isEditColumnData: true},
+      {label: 'Description', property: 'description', isDisableEdit: true, isDisableDelete: true, isEditColumnData: true}
     ];
   private studentTableClass: string = 'students';
 
@@ -44,6 +44,7 @@ export class StudentsListComponent implements OnInit {
       tableClass: this.studentTableClass,
       isEditData: true,
       isSearchField: true,
+      validationPatternData: ['\.+']
     };
     this.studentsTableOptions = new TableOptions(tableOptions);
     this.studentsList$ = this.dataService.getStudents();

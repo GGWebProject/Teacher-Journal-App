@@ -1,12 +1,14 @@
-import {AfterViewInit, Directive, ElementRef, HostListener, Input, Renderer2} from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[appDataEdit]'
+  selector: '[appHeaderEdit]'
 })
+export class TableDataEditDirective implements AfterViewInit {
 
-export class DataEditDirective implements AfterViewInit {
+  private delSelfTableHeaders: Array<string> = [];
 
-  @Input() public validationData?: Array<string> = [];
+  @Input('appHeaderEdit') public tableHeaders?: Array<string>;
+  @Input() public validationData: Array<string>;
 
   constructor(
     private renderer: Renderer2,
@@ -15,7 +17,9 @@ export class DataEditDirective implements AfterViewInit {
 
   @HostListener('dblclick', ['$event'])
   private onDblclick (): void {
-    this.renderEditField(this.el.nativeElement);
+    if (this.isSingularInput()) {
+      this.renderEditField(this.el.nativeElement);
+    }
   }
 
   @HostListener('click', ['$event'])
@@ -25,7 +29,12 @@ export class DataEditDirective implements AfterViewInit {
 
   private validationInput(input: HTMLInputElement): void {
     const regExp: RegExp = new RegExp(this.validationData[0] || '.*');
-    if (regExp.test(input.value)) {
+    const isInputValid: boolean = this.tableHeaders ?
+      regExp.test(input.value) && !this.delSelfTableHeaders.includes(input.value)
+      :
+      regExp.test(input.value);
+
+    if (isInputValid) {
       this.renderer.removeClass(input, 'invalid');
       this.renderer.addClass(input, 'valid');
     } else {
@@ -37,6 +46,11 @@ export class DataEditDirective implements AfterViewInit {
   private renderEditField(element: HTMLElement): void {
     const elementText: string = element.innerText;
     const input: HTMLInputElement = this.renderer.createElement('input');
+
+    if (!!this.tableHeaders) {
+      this.delSelfTableHeaders = this.tableHeaders.filter(header => header !== elementText);
+    }
+
     this.renderer.setProperty(input, 'value', elementText);
     element.innerText = '';
     element.appendChild(input);
@@ -62,7 +76,16 @@ export class DataEditDirective implements AfterViewInit {
     element.innerText = inputValue;
   }
 
+  private isSingularInput(): boolean {
+    const table: HTMLTableElement = this.el.nativeElement.closest('table');
+    return table.querySelectorAll('input').length === 0;
+  }
+
   public ngAfterViewInit(): void {
+    if (!(this.validationData instanceof Array)) {
+      this.validationData = [];
+    }
+
     this.renderer.listen( this.el.nativeElement, 'mouseenter', () => {
       this.renderer.addClass(this.el.nativeElement, 'edit-element');
     });

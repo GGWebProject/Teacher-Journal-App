@@ -13,11 +13,10 @@ import {
   MatInputModule,
   MatProgressSpinnerModule,
   MatSortModule,
-  MatTableModule
+  MatTableModule,
+  MatTooltipModule
 } from '@angular/material';
-import {HighLightDirective} from '../../shared/components/table/directives/hight-light.directive';
-import {HeaderEditDirective} from '../../shared/components/table/directives/header-edit.directive';
-import {DataEditDirective} from '../../shared/components/table/directives/data-edit.directive';
+import { HighLightDirective, TableDataEditDirective } from '../../shared/components/table';
 
 @NgModule({
             declarations: [
@@ -28,8 +27,7 @@ import {DataEditDirective} from '../../shared/components/table/directives/data-e
               TableComponent,
               StudentsComponent,
               HighLightDirective,
-              HeaderEditDirective,
-              DataEditDirective,
+              TableDataEditDirective,
             ],
             exports: [
               TableComponent
@@ -45,6 +43,7 @@ import {DataEditDirective} from '../../shared/components/table/directives/data-e
               MatProgressSpinnerModule,
               MatButtonModule,
               MatIconModule,
+              MatTooltipModule,
             ]
           })
 export class StudentsModule { }
