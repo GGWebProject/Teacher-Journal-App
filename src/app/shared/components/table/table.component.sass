@@ -6,10 +6,13 @@
   margin: 20px 0 20px
   td
     cursor: default
+    &:last-of-type
+      position: relative
 
   input
     &.invalid
       border-color: red
+
     &.valid
       border-color: green
 
@@ -24,11 +27,18 @@
     top: 0
     right: 0
     transform: translate(50%, -50%)
+
   &_remove-column
-    margin: 0 10px
+    margin: 0 5px
     &:hover
       border-radius: 50%
       background-color: #d3d3d35e
+
+  &_remove-row
+    position: absolute
+    top: 50%
+    right: 0
+    transform: translate(100%, -50%)
 
   &_save-table
     color: #333333

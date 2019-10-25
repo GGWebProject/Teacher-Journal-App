@@ -118,6 +118,7 @@ export class SubjectJournalComponent implements OnInit {
             isSearchField: true,
             validationPatternHeaders: ['^\\d{2}\\.\\d{2}$'],
             validationPatternData: ['^\\d{1,2}$|^.{0}$'],
+            isRemoveData: true,
           };
 
           this.subjectTableOptions = new TableOptions(tableOptions);

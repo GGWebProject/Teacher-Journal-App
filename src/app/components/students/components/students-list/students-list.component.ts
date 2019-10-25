@@ -41,6 +41,14 @@ export class StudentsListComponent implements OnInit {
     });
   }
 
+  private foundDeletedStudent(newArr: Array<Student>, oldArr: Array<Student>): Array<Student> {
+    if (newArr.length === oldArr.length) {
+      return null;
+    }
+
+    return oldArr.filter(oldStud => !newArr.find(newStud => newStud.id === oldStud.id));
+  }
+
   public onCreateStudent(): void {
     const link: Array<string> = ['/students/add'];
     this.router.navigate(link);
@@ -52,7 +60,8 @@ export class StudentsListComponent implements OnInit {
       tableClass: this.studentTableClass,
       isEditData: true,
       isSearchField: true,
-      validationPatternData: ['\.+']
+      validationPatternData: ['\.+'],
+      isRemoveData: true,
     };
     this.studentsTableOptions = new TableOptions(tableOptions);
     this.studentsList$ = this.dataService.getStudents();
@@ -66,10 +75,23 @@ export class StudentsListComponent implements OnInit {
 
   public saveData(data: IStandardTable): void {
     const newStudents: Array<Student> = data.tableData;
-    const diffStudent: Array<Student> = this.compareStudentsArrays(newStudents, this.studentsTableView);
+    const deletedStudents: Array<Student> = this.foundDeletedStudent(newStudents, this.studentsTableView);
+    const changedStudent: Array<Student> = this.compareStudentsArrays(newStudents, this.studentsTableView);
+
+    console.log(deletedStudents);
+
     forkJoin(
-      diffStudent.map(
+      changedStudent.map(
         (student: Student) => this.dataService.updateStudent(student)
+      )
+    ).subscribe(
+      () => this.router.navigate['/students'],
+      err => console.log(err)
+    );
+
+    forkJoin(
+      deletedStudents.map(
+        (student: Student) => this.dataService.deleteStudent(student)
       )
     ).subscribe(
       () => this.router.navigate['/students'],

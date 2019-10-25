@@ -5,7 +5,7 @@
       "firstName": "Vitaly",
       "lastName": "Hantarenka",
       "address": "Sharangovicha st., 483",
-      "description": "33"
+      "description": "HELLO33"
     },
     {
       "id": 1,
@@ -18,78 +18,50 @@
       "firstName": "Гонтаренко",
       "lastName": "Александрович",
       "address": "Улица Шаранговича, 48, 463",
-      "description": "3",
-      "id": 2
-    },
-    {
-      "firstName": "Гонтаренко",
-      "lastName": "Александрович",
-      "address": "Улица Шаранговича, 48, 463",
-      "description": "3",
+      "description": "description",
       "id": 3
     },
     {
       "firstName": "Гонтаренко",
       "lastName": "Александрович",
       "address": "Улица Шаранговича, 48, 463",
-      "description": "132",
+      "description": "eeeeqweqewqewqewq",
       "id": 4
     },
     {
       "firstName": "Гонтаренко",
       "lastName": "Александрович",
       "address": "Улица Шаранговича, 48, 463",
-      "description": "zxcvbdfgsfasd",
+      "description": "eeeeqweqewqewqewq",
       "id": 5
-    },
-    {
-      "firstName": "Гонтаренко",
-      "lastName": "Александрович",
-      "address": "Улица Шаранговича, 48, 463",
-      "description": "eeeeqweqewqewqewq",
-      "id": 6
-    },
-    {
-      "firstName": "Гонтаренко",
-      "lastName": "Александрович",
-      "address": "Улица Шаранговича, 48, 463",
-      "description": "eeeeqweqewqewqewq",
-      "id": 7
-    },
-    {
-      "firstName": "Гонтаренко",
-      "lastName": "Александрович",
-      "address": "Улица Шаранговича, 48, 463",
-      "description": "eeeeqweqewqewqewq",
-      "id": 8
-    },
-    {
-      "firstName": "Гонтаренко",
-      "lastName": "Александрович",
-      "address": "Улица Шаранговича, 48, 463",
-      "description": "eeeeqweqewqewqewq5654684848",
-      "id": 9
-    },
-    {
-      "firstName": "Гонтаренко",
-      "lastName": "Александрович",
-      "address": "Улица Шаранговича, 48, 463",
-      "description": "3123123123123213213",
-      "id": 10
     }
   ],
   "subjects": [
     {
       "id": 0,
-      "firstName": "Vitaly",
-      "lastName": "Hantarenka",
-      "address": "Sharangovicha st., 48",
-      "description": "test desctiprion3"
+      "name": "Physics",
+      "teacher": "First teacher",
+      "cabiner": 9,
+      "description": "test description of subject 1",
+      "dates": [
+        "10.06",
+        "11.06"
+      ],
+      "students": [
+        {
+          "id": 1,
+          "marks": []
+        },
+        {
+          "id": 3,
+          "marks": []
+        }
+      ]
     },
     {
       "id": 1,
       "name": "Chemistry",
-      "teacher": "Second theacher",
+      "teacher": "Second teacher",
       "cabiner": 99,
       "description": "test description of subject 2",
       "dates": [
@@ -125,15 +97,6 @@
             {
               "date": "12.06",
               "value": "5"
-            }
-          ]
-        },
-        {
-          "id": 3,
-          "marks": [
-            {
-              "date": "11.06",
-              "value": "10"
             }
           ]
         }

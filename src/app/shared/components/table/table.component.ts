@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Outp
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { IStandardTable, ITableHeader, ITableChange } from './interfaces';
 import { TableOptions, TableChange } from './models';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-table',
@@ -64,7 +65,7 @@ export class TableComponent implements OnInit, AfterViewInit {
       tableData: this.dataSource.data,
       tableDisplayCols: this.displayedColumns
     };
-    return JSON.stringify(this.standardTable) !== JSON.stringify(currentTableState);
+    return !_.isEqual(this.standardTable, currentTableState);
   }
 
   private applyTableData(tableData: Array<object>, change: ITableChange | null = null): void {
@@ -133,6 +134,21 @@ export class TableComponent implements OnInit, AfterViewInit {
     }
   }
 
+  public onRemoveRow(data: object): void {
+    const filteredRows: Array<object> = this.dataSource.data.filter(_data => !_.isEqual(_data, data));
+    const tableChange: TableChange = {
+      type: 'removeRow',
+      rowIndex: null,
+      columnIndex: null,
+      currentValue: null,
+      tableData: null,
+      tableHeaders: null,
+      tableDisplayCols: null,
+    };
+    this.applyTableData(filteredRows, tableChange);
+    console.log(this.tableChanges);
+  }
+
   public onAddColumn(): void {
     const tempColumnName: string = `tempColumn${this.tempColumnNumb++}`;
     this.saveTableHeader('column name', tempColumnName);
@@ -172,7 +188,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
     tableData = this.dataSource.data.map(data => ({...data}));
     editRowData = {...rowData};
-    tableRowIndex = tableData.findIndex(data => JSON.stringify(data) === JSON.stringify(rowData));
+    tableRowIndex = tableData.findIndex(data => _.isEqual(data, rowData));
     currentData = evTarget.value;
 
     if (evTarget.value) {

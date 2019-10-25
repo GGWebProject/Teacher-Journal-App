@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Student, Subject, SubjectList } from '../entities';
-import {catchError, retry, tap, map, delay} from 'rxjs/operators';
+import { catchError, retry, tap, map, delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +56,21 @@ export class DataService {
     );
   }
 
+  public updateSubjectJournal(subject: Subject): Observable<Subject | void> {
+    const body: string = JSON.stringify({...subject});
+    const options: object = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http
+      .put<Subject>(`${this.subjectsUrl}/${subject.id}`, body, options)
+      .pipe(
+        retry(3),
+        tap(_ => console.log(`updated Subject id=${subject.id}`)),
+        catchError(this.handleError)
+      );
+  }
+
   public getStudents(): Observable<Array<Student>> {
     return this.http
       .get<Array<Student>>(this.studentsUrl)
@@ -97,23 +112,17 @@ export class DataService {
       .put<Student>(`${this.studentsUrl}/${student.id}`, body, options)
       .pipe(
         retry(3),
-        tap(_ => console.log(`updated Student id=${student.id}`)),
         catchError(this.handleError)
       );
   }
 
-  public updateSubjectJournal(subject: Subject): Observable<Subject | void> {
-    const body: string = JSON.stringify({...subject});
+  public deleteStudent(student: Student): Observable<{}> {
     const options: object = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
-    return this.http
-      .put<Subject>(`${this.subjectsUrl}/${subject.id}`, body, options)
-      .pipe(
-        retry(3),
-        tap(_ => console.log(`updated Subject id=${subject.id}`)),
-        catchError(this.handleError)
-      );
+    return this.http.delete(`${this.studentsUrl}/${student.id}`, options).pipe(
+      catchError(this.handleError)
+    );
   }
 }

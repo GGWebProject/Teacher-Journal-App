@@ -10,4 +10,5 @@ export interface ITableOptions {
   isSearchField?: boolean;
   validationPatternHeaders?: Array<string>;
   validationPatternData?: Array<string>;
+  isRemoveData: boolean;
 }

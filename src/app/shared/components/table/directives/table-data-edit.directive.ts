@@ -1,14 +1,17 @@
 import { AfterViewInit, Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[appHeaderEdit]'
+  selector: '[appTableDataEdit]'
 })
 export class TableDataEditDirective implements AfterViewInit {
 
   private delSelfTableHeaders: Array<string> = [];
 
-  @Input('appHeaderEdit') public tableHeaders?: Array<string>;
+  @Input('appTableDataEdit') public tableHeaders?: Array<string>;
   @Input() public validationData: Array<string>;
+  @Input() public isEdit: boolean;
+
+  public editableSpan: HTMLElement = null;
 
   constructor(
     private renderer: Renderer2,
@@ -16,15 +19,17 @@ export class TableDataEditDirective implements AfterViewInit {
   ) { }
 
   @HostListener('dblclick', ['$event'])
-  private onDblclick (): void {
-    if (this.isSingularInput()) {
-      this.renderEditField(this.el.nativeElement);
-    }
-  }
+  private onDblclick (event: MouseEvent): void {
+    const clickTarget: HTMLElement = event.target as HTMLElement;
+    const isHeader: boolean = !!this.tableHeaders;
+    const isCanEdit: boolean = isHeader ?
+      this.isSingularInput() && this.isEdit && clickTarget === this.editableSpan
+      :
+      this.isSingularInput() && this.isEdit;
 
-  @HostListener('click', ['$event'])
-  private onClick (event: MouseEvent): void {
-    event.stopPropagation();
+    if (isCanEdit) {
+      this.renderEditField(this.editableSpan);
+    }
   }
 
   private validationInput(input: HTMLInputElement): void {
@@ -82,15 +87,28 @@ export class TableDataEditDirective implements AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
+    let isHeader: boolean;
+
+    if (!this.isEdit) {
+      return;
+    }
+
+    isHeader = !!this.tableHeaders;
+
+    this.editableSpan = this.el.nativeElement.querySelector('span');
+
     if (!(this.validationData instanceof Array)) {
       this.validationData = [];
     }
 
-    this.renderer.listen( this.el.nativeElement, 'mouseenter', () => {
+    this.renderer.listen( isHeader ? this.editableSpan : this.el.nativeElement, 'mouseenter', () => {
       this.renderer.addClass(this.el.nativeElement, 'edit-element');
     });
-    this.renderer.listen( this.el.nativeElement, 'mouseleave', () => {
+    this.renderer.listen( isHeader ? this.editableSpan : this.el.nativeElement, 'mouseleave', () => {
       this.renderer.removeClass(this.el.nativeElement, 'edit-element');
+    });
+    this.renderer.listen( isHeader ? this.editableSpan : this.el.nativeElement, 'click', (event: MouseEvent) => {
+      event.stopPropagation();
     });
   }
 }
