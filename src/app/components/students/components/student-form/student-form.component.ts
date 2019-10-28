@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Student } from '../../../../common/entities';
 import { DataService } from '../../../../common/services/data.service';
 import { ICanComponentDeactivate } from '../../../../common/interfaces/ican-component-deactivate';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-form',

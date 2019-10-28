@@ -56,7 +56,7 @@ export class DataService {
     );
   }
 
-  public updateSubjectJournal(subject: Subject): Observable<Subject | void> {
+  public updateSubject(subject: Subject): Observable<Subject | void> {
     const body: string = JSON.stringify({...subject});
     const options: object = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -69,6 +69,30 @@ export class DataService {
         tap(_ => console.log(`updated Subject id=${subject.id}`)),
         catchError(this.handleError)
       );
+  }
+
+  public saveSubject(subject: Subject): Observable<Subject | void> {
+    const body: string = JSON.stringify({...subject});
+    const options: object = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http
+      .post<Subject>(this.subjectsUrl, body, options)
+      .pipe(
+        retry(3),
+        catchError(this.handleError)
+      );
+  }
+
+  public deleteSubject(subjectId: number): Observable<{}> {
+    const options: object = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http.delete(`${this.subjectsUrl}/${subjectId}`, options).pipe(
+      catchError(this.handleError)
+    );
   }
 
   public getStudents(): Observable<Array<Student>> {

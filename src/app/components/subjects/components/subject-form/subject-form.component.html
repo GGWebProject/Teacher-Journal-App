@@ -1,1 +1,41 @@
-<p>subject-form works!</p>
+<app-shared-form
+  (saveForm)="onSave($event)"
+  [entity]="'subject'"
+  [submitButtonText]="'Save'"
+  #subjectFormComponent
+>
+  <label for="form__name">*Name</label>
+  <input
+    name="name"
+    type="text"
+    id="form__name"
+    placeholder="Name"
+    required
+    [(ngModel)]="subject.name"
+  >
+  <label for="form__teacher">*Teacher:</label>
+  <input
+    name="teacher"
+    type="text"
+    id="form__teacher"
+    placeholder="Teacher"
+    required
+    [(ngModel)]="subject.teacher"
+  >
+  <label for="form__cabinet">Cabinet:</label>
+  <input
+    name="cabinet"
+    type="text"
+    id="form__cabinet"
+    placeholder="Cabinet"
+    [(ngModel)]="subject.cabinet"
+  >
+  <label for="form__description">Description:</label>
+  <input
+    name="description"
+    type="text"
+    id="form__description"
+    placeholder="Description"
+    [(ngModel)]="subject.description"
+  >
+</app-shared-form>

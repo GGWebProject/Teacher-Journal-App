@@ -1,9 +1,38 @@
 <ng-container *ngIf="subjectsList; else elseBlock">
-  <div class="subjects">
-    <a class="subject" *ngFor="let subject of subjectsList" title="{{subject.description}}" [routerLink]="['./subject', subject.id]">
-      {{subject.name}}
-    </a>
-  </div>
+  <ul class="subjects">
+    <li *ngFor="let subject of subjectsList">
+      <a class="subject" title="{{subject.description}}" [routerLink]="['./subject', subject.id]">
+        {{subject.name}}
+      </a>
+      <button
+        mat-mini-fab
+        color="accent"
+        class="subjects__button_edit"
+        (click)="editSubject(subject.id)"
+      >
+        <mat-icon>
+          edit
+        </mat-icon>
+      </button>
+      <button
+        mat-mini-fab
+        color="warn"
+        class="subjects__button_remove"
+        (click)="removeSubject(subject.id)"
+      >
+        <mat-icon>
+          delete_forever
+        </mat-icon>
+      </button>
+    </li>
+  </ul>
+  <button
+    mat-raised-button
+    color="primary"
+    class="subjects__button_add"
+    (click)="onCreateSubject()">
+    Add new subject
+  </button>
 </ng-container>
 <ng-template #elseBlock>
   <mat-spinner></mat-spinner>

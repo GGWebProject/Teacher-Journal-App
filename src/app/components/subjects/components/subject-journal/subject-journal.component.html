@@ -5,6 +5,13 @@
     [tableView]="subjectTableView"
     (onSaveData)="saveData($event)"
   ></app-table>
+  <button
+    mat-raised-button
+    color="primary"
+    class="students__button_add"
+    (click)="addStudents()">
+    Add students
+  </button>
 </ng-container>
 <ng-template #elseBlock>
   <mat-spinner></mat-spinner>

@@ -3,6 +3,25 @@
   flex-wrap: wrap
   align-items: stretch
   justify-content: center
+  padding: 0
+  &__button
+    &_add
+      margin: 0 auto
+      display: block
+    &_edit
+      position: absolute
+      top: 0
+      right: 0
+      transform: translate(50%, -50%)
+    &_remove
+      position: absolute
+      bottom: 0
+      right: 0
+      transform: translate(50%, 50%)
+  li
+    list-style: none
+    margin: 20px
+    position: relative
   .subject
     width: 150px
     height: 150px
@@ -14,7 +33,6 @@
     color: #fff
     text-decoration: none
     font-size: 22px
-    margin: 20px
     transition: background-color .3s, color .3s
     &:hover
       background-color: #8c8c8c

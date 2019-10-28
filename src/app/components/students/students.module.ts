@@ -30,7 +30,8 @@ import { HighLightDirective, TableDataEditDirective } from '../../shared/compone
               TableDataEditDirective,
             ],
             exports: [
-              TableComponent
+              TableComponent,
+              FormComponent
             ],
             imports: [
               CommonModule,

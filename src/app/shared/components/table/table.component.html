@@ -44,7 +44,7 @@
           mat-sort-header
           [appTableDataEdit]="displayedColumns"
           [validationData]="options.validationPatternHeaders"
-          [isEdit]="options.isEditData && header.isEditColumnData"
+          [isEdit]="options.isEditData && !header.isDisableEdit"
         >
           <span (change)="changeHeader(header, $event)">
             {{header.label}}

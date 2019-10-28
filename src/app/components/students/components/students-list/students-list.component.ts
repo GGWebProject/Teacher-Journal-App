@@ -85,10 +85,14 @@ export class StudentsListComponent implements OnInit {
         (student: Student) => this.dataService.updateStudent(student)
       )
     ).subscribe(
-      () => this.router.navigate['/students'],
-      err => console.log(err)
+      // () => this.router.navigate['/students'],
+      // err => console.log(err)
     );
 
+    if (!deletedStudents) {
+      return;
+    }
+    // need make one request to server, but request, like this localhost/students/1,2,3,4 - doesn't work
     forkJoin(
       deletedStudents.map(
         (student: Student) => this.dataService.deleteStudent(student)

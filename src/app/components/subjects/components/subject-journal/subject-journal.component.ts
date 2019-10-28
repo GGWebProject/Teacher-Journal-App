@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { delay, map, pluck } from 'rxjs/operators';
-import { forkJoin, Observable } from 'rxjs';
+import {forkJoin, Observable, of} from 'rxjs';
 import { DataService } from '../../../../common/services/data.service';
-import { Subject } from '../../../../common/entities';
+import {Student, Subject} from '../../../../common/entities';
 import { TableOptions } from '../../../../shared/components/table/models/table-options';
 import { IStandardTable, ITableHeader } from '../../../../shared/components/table/interfaces';
 import {IMark, ISubjectStudent} from '../../../../common/interfaces';
@@ -35,7 +35,7 @@ export class SubjectJournalComponent implements OnInit {
   private getSubjectTableDates (subject: Subject): Array<ITableHeader> {
     let tableHeaderDates: Array<ITableHeader> = [];
 
-    if (subject.dates.length === 0) {
+    if (!subject.dates || subject.dates.length === 0 ) {
       return tableHeaderDates;
     }
 
@@ -88,11 +88,19 @@ export class SubjectJournalComponent implements OnInit {
   }
 
   private createSubjectTableRow(students: Array<ISubjectStudent>): Observable<Array<object>> {
+      if (!students || students.length === 0) {
+        return of([]);
+      }
       return forkJoin(
         students.map(
           (student: ISubjectStudent) => this.createStudentInfo(student)
         )
       );
+  }
+
+  public addStudents(): void {
+    const student: Student = new Student();
+    console.log(student);
   }
 
   public ngOnInit(): void {
@@ -126,13 +134,13 @@ export class SubjectJournalComponent implements OnInit {
           this.createSubjectTableRow(this.subject.students)
             .subscribe(
               res => this.subjectTableView = [...res],
+              err => console.log(err),
             );
         },
       );
   }
 
   public saveData(data: IStandardTable): void {
-    console.log(data);
     const subjectDates: Array<string> = data.tableDisplayCols.filter(col => !isNaN(parseInt(col, 10)));
     const subjectStudents: Array<ISubjectStudent> = data.tableData.map(student => {
       const id: number = student.id;
@@ -144,7 +152,7 @@ export class SubjectJournalComponent implements OnInit {
     });
     const newSubject: Subject = {...this.subject, dates: subjectDates, students: subjectStudents};
 
-    this.dataService.updateSubjectJournal(newSubject)
+    this.dataService.updateSubject(newSubject)
       .subscribe(
       () => this.router.navigate[`/subject/${newSubject.id}`],
       err => console.log(err)
