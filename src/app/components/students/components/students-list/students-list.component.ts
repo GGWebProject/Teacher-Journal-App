@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import {forkJoin, Observable} from 'rxjs';
+import {concat, forkJoin, Observable} from 'rxjs';
 import { Student } from '../../../../common/entities';
 import { DataService } from '../../../../common/services/data.service';
 import '../../../../../../db/db.json';
@@ -43,10 +43,27 @@ export class StudentsListComponent implements OnInit {
 
   private foundDeletedStudent(newArr: Array<Student>, oldArr: Array<Student>): Array<Student> {
     if (newArr.length === oldArr.length) {
-      return null;
+      return [];
     }
 
     return oldArr.filter(oldStud => !newArr.find(newStud => newStud.id === oldStud.id));
+  }
+
+  private deleteStudents(students: Array<Student>): Observable<Array<{}>> {
+    // need make one request to server, but request, like this localhost/students/1,2,3,4 - doesn't work
+    return forkJoin(
+      students.map(
+        (student: Student) => this.dataService.deleteStudent(student)
+      )
+    );
+  }
+
+  private updateStudents(students: Array<Student>): Observable<Array<Student | void>> {
+    return forkJoin(
+      students.map(
+        (student: Student) => this.dataService.updateStudent(student)
+      )
+    );
   }
 
   public onCreateStudent(): void {
@@ -78,28 +95,10 @@ export class StudentsListComponent implements OnInit {
     const deletedStudents: Array<Student> = this.foundDeletedStudent(newStudents, this.studentsTableView);
     const changedStudent: Array<Student> = this.compareStudentsArrays(newStudents, this.studentsTableView);
 
-    console.log(deletedStudents);
-
-    forkJoin(
-      changedStudent.map(
-        (student: Student) => this.dataService.updateStudent(student)
-      )
-    ).subscribe(
-      // () => this.router.navigate['/students'],
-      // err => console.log(err)
-    );
-
-    if (!deletedStudents) {
-      return;
-    }
-    // need make one request to server, but request, like this localhost/students/1,2,3,4 - doesn't work
-    forkJoin(
-      deletedStudents.map(
-        (student: Student) => this.dataService.deleteStudent(student)
-      )
-    ).subscribe(
-      () => this.router.navigate['/students'],
-      err => console.log(err)
-    );
+    concat(this.updateStudents(changedStudent), this.deleteStudents(deletedStudents))
+      .subscribe(
+        () => this.router.navigate['/students'],
+        err => console.log(err)
+      );
   }
 }

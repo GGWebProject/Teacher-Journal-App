@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import {concat, forkJoin, Observable, of, throwError} from 'rxjs';
 import { Student, Subject, SubjectList } from '../entities';
-import { catchError, retry, tap, map, delay } from 'rxjs/operators';
+import {catchError, retry, tap, map, delay, filter, concatMap, exhaustMap} from 'rxjs/operators';
+import {ISubjectStudent} from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,41 @@ export class DataService {
           err => console.log(err)
         ),
         catchError(this.handleError)
+      );
+  }
+
+  private removeStudentFromSubject(student: Student): Observable<Array<Subject | void>> {
+    return this.getSubjects()
+      .pipe(
+        map(
+          (subjects: Array<Subject>) =>
+            subjects
+              // subjects that contain student
+              .filter(
+                (subject: Subject) =>
+                  subject.students.find((_stud: ISubjectStudent) => _stud.id === student.id)
+              )
+              // remove student from subjects
+              .map(
+                (subject: Subject) => {
+                  subject.students = subject.students.filter((_stud: ISubjectStudent) => _stud.id !== student.id);
+                  return subject;
+                }
+              )
+        )
+      )
+      // update subjects
+      .pipe(
+        tap(
+          data => console.log(data),
+        ),
+        exhaustMap((subjects) => {
+          return forkJoin(
+            subjects.map(
+              (subject: Subject) => this.updateSubject(subject)
+            )
+          );
+        })
       );
   }
 
@@ -126,7 +162,6 @@ export class DataService {
   }
 
   public updateStudent(student: Student): Observable<Student | void> {
-    console.log(student);
     const body: string = JSON.stringify({...student});
     const options: object = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -145,8 +180,11 @@ export class DataService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
-    return this.http.delete(`${this.studentsUrl}/${student.id}`, options).pipe(
+    const removedStudentsFromSubjects$: Observable<Array<Subject | void>> = this.removeStudentFromSubject(student);
+    const removedStudentFromList$: Observable<{}> = this.http.delete(`${this.studentsUrl}/${student.id}`, options).pipe(
       catchError(this.handleError)
     );
+
+    return concat(removedStudentsFromSubjects$, removedStudentFromList$);
   }
 }

@@ -2,7 +2,7 @@
   <input #tableSearchField matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
 </mat-form-field>
 
-<ng-container *ngIf="true; else elseBlock">
+<ng-container *ngIf="!!this.dataSource.data; else elseBlock">
   <div class="table__wrapper">
     <button
       mat-mini-fab
@@ -97,6 +97,6 @@
   </div>
 </ng-container>
 
-<ng-template #elseBlock>
+<ng-container *ngIf="!this.dataSource.data;">
   <p>Sorry! But we didn`t found data :(</p>
-</ng-template>
+</ng-container>
