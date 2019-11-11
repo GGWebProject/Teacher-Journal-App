@@ -13,7 +13,6 @@ import { NgForm, NgModel } from '@angular/forms';
 
 export class FormComponent implements AfterViewInit {
 
-  @Input() public entity: string;
   @Input() public submitButtonText: string;
 
   @Output() public saveForm: EventEmitter<NgForm> = new EventEmitter<NgForm>();
@@ -21,8 +20,7 @@ export class FormComponent implements AfterViewInit {
   @ContentChildren(NgModel) public models: QueryList<NgModel>;
   @ViewChild(NgForm, {static: false}) public form: NgForm;
 
-  constructor(
-  ) {}
+  constructor() {}
 
   public ngAfterViewInit(): void {
     let ngContentModels: NgModel[] = this.models.toArray();

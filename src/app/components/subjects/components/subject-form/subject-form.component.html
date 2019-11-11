@@ -1,8 +1,8 @@
 <app-shared-form
-  (saveForm)="onSave($event)"
-  [entity]="'subject'"
-  [submitButtonText]="'Save'"
   #subjectFormComponent
+  [submitButtonText]="'Save'"
+  [ngClass]="'form_subject'"
+  (saveForm)="onSaveForm()"
 >
   <label for="form__name">*Name</label>
   <input

@@ -5,9 +5,9 @@ import { SubjectsRoutingModule } from './subjects-routing.module';
 import { SubjectsListComponent, SubjectFormComponent, SubjectJournalComponent } from './components';
 import { SubjectsComponent } from './subjects.component';
 import { SubjectResolveGuard } from './guards/subject-resolve.guard';
-import {StudentsModule} from '../students/students.module';
-import {MatButtonModule, MatIconModule, MatProgressSpinnerModule} from '@angular/material';
-import {FormsModule} from '@angular/forms';
+import { StudentsModule } from '../students/students.module';
+import { MatButtonModule, MatFormFieldModule, MatIconModule, MatProgressSpinnerModule, MatSelectModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ SubjectsListComponent, SubjectFormComponent, SubjectJournalComponent, SubjectsComponent ],
@@ -19,7 +19,10 @@ import {FormsModule} from '@angular/forms';
               MatProgressSpinnerModule,
               MatButtonModule,
               FormsModule,
-              MatIconModule
+              MatIconModule,
+              MatFormFieldModule,
+              MatSelectModule,
+              ReactiveFormsModule
             ]
           })
 export class SubjectsModule { }

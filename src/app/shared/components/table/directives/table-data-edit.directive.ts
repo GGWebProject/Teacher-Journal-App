@@ -3,6 +3,7 @@ import { AfterViewInit, Directive, ElementRef, HostListener, Input, Renderer2 } 
 @Directive({
   selector: '[appTableDataEdit]'
 })
+
 export class TableDataEditDirective implements AfterViewInit {
 
   private delSelfTableHeaders: Array<string> = [];
@@ -22,12 +23,13 @@ export class TableDataEditDirective implements AfterViewInit {
   private onDblclick (event: MouseEvent): void {
     const clickTarget: HTMLElement = event.target as HTMLElement;
     const isHeader: boolean = !!this.tableHeaders;
-    const isCanEdit: boolean = isHeader ?
-      this.isSingularInput() && this.isEdit && clickTarget === this.editableSpan
+    const booleanExpression: boolean = this.isSingularInput() && this.isEdit;
+    const isCellBeingEdited: boolean = isHeader ?
+      booleanExpression && clickTarget === this.editableSpan
       :
-      this.isSingularInput() && this.isEdit;
+      booleanExpression;
 
-    if (isCanEdit) {
+    if (isCellBeingEdited) {
       this.renderEditField(this.editableSpan);
     }
   }

@@ -1,8 +1,8 @@
 <app-shared-form
   (saveForm)="onSaveForm($event)"
-  [entity]="'student'"
   [submitButtonText]="'Save'"
   #studentFormComponent
+  [ngClass]="'form_student'"
 >
   <label for="form__name">*Name</label>
   <input

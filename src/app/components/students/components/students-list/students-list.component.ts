@@ -1,12 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {concat, forkJoin, Observable} from 'rxjs';
+import { concat, forkJoin, Observable } from 'rxjs';
 import { Student } from '../../../../common/entities';
 import { DataService } from '../../../../common/services/data.service';
 import '../../../../../../db/db.json';
 import { ITableHeader, IStandardTable, TableOptions } from '../../../../shared/components/table';
 import * as _ from 'lodash';
-import {ISubjectStudent} from '../../../../common/interfaces';
 
 @Component({
   selector: 'app-students-list',

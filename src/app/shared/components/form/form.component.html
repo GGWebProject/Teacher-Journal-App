@@ -1,7 +1,9 @@
-<form (ngSubmit)="onSaveForm()" #form="ngForm" [ngClass]="'form_' + entity" novalidate>
+<form (ngSubmit)="onSaveForm()" #form="ngForm" novalidate>
   <ng-content></ng-content>
   <button
     [disabled]="form.invalid"
+    mat-raised-button
+    color="primary"
     type="submit"
   >{{submitButtonText}}</button>
 </form>

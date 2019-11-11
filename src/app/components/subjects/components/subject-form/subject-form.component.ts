@@ -24,7 +24,7 @@ export class SubjectFormComponent implements OnInit {
     private dataService: DataService,
   ) { }
 
-  public onSave(): void {
+  public onSaveForm(): void {
     const method: string = this.subject.id ? 'updateSubject' : 'saveSubject';
     this.dataService[method](this.subject)
       .subscribe(

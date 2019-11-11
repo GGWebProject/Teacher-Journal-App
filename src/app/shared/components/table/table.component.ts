@@ -146,7 +146,6 @@ export class TableComponent implements OnInit, AfterViewInit {
       tableDisplayCols: null,
     };
     this.applyTableData(filteredRows, tableChange);
-    console.log(this.tableChanges);
   }
 
   public onAddColumn(): void {

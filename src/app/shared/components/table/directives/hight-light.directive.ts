@@ -18,8 +18,7 @@ export class HighLightDirective implements AfterViewInit {
 
   private getCell(cells: Array<HTMLTableCellElement>): HTMLTableCellElement {
     const { compareCellClass } = this.highLightOptions;
-    cells.find = [].find;
-    return cells.find(cell => cell.classList.value.includes(compareCellClass));
+    return [].find.call(cells, cell => cell.classList.value.includes(compareCellClass));
   }
 
   public ngAfterViewInit(): void {
@@ -32,7 +31,7 @@ export class HighLightDirective implements AfterViewInit {
     const compareCell: HTMLTableCellElement = this.getCell(this.el.nativeElement.cells);
 
     if (!!compareCell) {
-      let compareCellValue: number | string = null;
+      let compareCellValue: number | string;
 
       if (typeof middleValue === 'number') {
         compareCellValue = parseInt(compareCell.innerText, 10);

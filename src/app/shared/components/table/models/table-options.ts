@@ -1,6 +1,6 @@
 import { ITableHeader, ITableOptions, ITableHighLightOptions } from '../interfaces';
 
-export class TableOptions {
+export class TableOptions implements ITableOptions {
   public tableHeaders: Array<ITableHeader>;
   public tableClass: string;
   public highLightOptions?: ITableHighLightOptions;

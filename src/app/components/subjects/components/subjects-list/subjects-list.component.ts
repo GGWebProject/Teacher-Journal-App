@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { DataService } from '../../../../common/services/data.service';
-import {Subject, SubjectList} from '../../../../common/entities';
-import {Router} from '@angular/router';
+import { SubjectList } from '../../../../common/entities';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-subject-list',

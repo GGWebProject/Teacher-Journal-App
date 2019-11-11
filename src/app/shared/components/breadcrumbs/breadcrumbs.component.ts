@@ -1,8 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, ChildActivationEnd, NavigationEnd, Router} from '@angular/router';
-import {filter, map, switchMap} from 'rxjs/operators';
-import {Breadcrumb} from './entities/breadcrumb';
-import {isNullOrUndefined} from 'util';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { Breadcrumb } from './entities/breadcrumb';
 
 @Component({
   selector: 'app-breadcrumbs',

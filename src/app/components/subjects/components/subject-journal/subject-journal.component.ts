@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { delay, map, pluck } from 'rxjs/operators';
-import {forkJoin, Observable, of} from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { DataService } from '../../../../common/services/data.service';
-import {Student, Subject} from '../../../../common/entities';
-import { TableOptions } from '../../../../shared/components/table/models/table-options';
+import { Student, Subject, SubjectStudent } from '../../../../common/entities';
+import { TableOptions } from '../../../../shared/components/table/models';
 import { IStandardTable, ITableHeader } from '../../../../shared/components/table/interfaces';
-import {IMark, ISubjectStudent} from '../../../../common/interfaces';
+import { IMark, ISubjectStudent } from '../../../../common/interfaces';
+import { FormControl } from '@angular/forms';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-subject-journal',
@@ -25,6 +27,8 @@ export class SubjectJournalComponent implements OnInit {
 
   public subjectTableOptions: TableOptions;
   public subjectTableView: Array<object>;
+  public studentList: Array<Student>;
+  public studentsListForAdd: FormControl = new FormControl();
 
   constructor(
     private dataService: DataService,
@@ -99,8 +103,31 @@ export class SubjectJournalComponent implements OnInit {
   }
 
   public addStudents(): void {
-    const student: Student = new Student();
-    console.log(student);
+    let selectedStudent: Array<number>;
+
+    if (!this.studentsListForAdd.valid) {
+      return;
+    }
+
+    selectedStudent = this.studentsListForAdd.value;
+
+    const newStudentsArr: Array<ISubjectStudent> = selectedStudent.map(studentId => {
+      return new SubjectStudent(studentId);
+    });
+
+    const newSubjectStudents: Array<ISubjectStudent> = this.subject.students.concat(newStudentsArr);
+
+    const newSubject: Subject = {...this.subject, students: newSubjectStudents};
+
+    this.dataService.updateSubject(newSubject)
+      .subscribe(
+        () => this.router.navigate[`/subject/${newSubject.id}`],
+        err => console.log(err)
+      );
+  }
+
+  public checkStudentInSubject(studentId: number): boolean {
+    return !!_.find(this.subject.students, (student) => student.id === studentId);
   }
 
   public ngOnInit(): void {
@@ -137,6 +164,14 @@ export class SubjectJournalComponent implements OnInit {
               err => console.log(err),
             );
         },
+      );
+
+    this.dataService.getStudents()
+      .subscribe(
+        data => {
+          this.studentList = data;
+        },
+        err => console.log(err)
       );
   }
 

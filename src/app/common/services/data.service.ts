@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import {concat, forkJoin, Observable, of, throwError} from 'rxjs';
+import { concat, forkJoin, Observable, of, throwError } from 'rxjs';
 import { Student, Subject, SubjectList } from '../entities';
-import {catchError, retry, tap, map, delay, filter, concatMap, exhaustMap} from 'rxjs/operators';
-import {ISubjectStudent} from '../interfaces';
+import { catchError, retry, tap, map, delay, filter, concatMap, exhaustMap } from 'rxjs/operators';
+import { ISubjectStudent } from '../interfaces';
+
+const studentsUrl: string = 'http://localhost:3000/students';
+const subjectsUrl: string = 'http://localhost:3000/subjects';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class DataService {
-
-  private studentsUrl: string = 'http://localhost:3000/students';
-  private subjectsUrl: string = 'http://localhost:3000/subjects';
 
   constructor(
     private http: HttpClient,
@@ -32,7 +32,7 @@ export class DataService {
 
   private getSubjects(): Observable<Array<Subject>> {
     return this.http
-      .get<Array<Subject>>(this.subjectsUrl)
+      .get<Array<Subject>>(subjectsUrl)
       .pipe(
         retry(3),
         tap(
@@ -99,7 +99,7 @@ export class DataService {
     };
 
     return this.http
-      .put<Subject>(`${this.subjectsUrl}/${subject.id}`, body, options)
+      .put<Subject>(`${subjectsUrl}/${subject.id}`, body, options)
       .pipe(
         retry(3),
         tap(_ => console.log(`updated Subject id=${subject.id}`)),
@@ -114,7 +114,7 @@ export class DataService {
     };
 
     return this.http
-      .post<Subject>(this.subjectsUrl, body, options)
+      .post<Subject>(subjectsUrl, body, options)
       .pipe(
         retry(3),
         catchError(this.handleError)
@@ -126,14 +126,14 @@ export class DataService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
-    return this.http.delete(`${this.subjectsUrl}/${subjectId}`, options).pipe(
+    return this.http.delete(`${subjectsUrl}/${subjectId}`, options).pipe(
       catchError(this.handleError)
     );
   }
 
   public getStudents(): Observable<Array<Student>> {
     return this.http
-      .get<Array<Student>>(this.studentsUrl)
+      .get<Array<Student>>(studentsUrl)
       .pipe(
         retry(3),
         catchError(this.handleError)
@@ -154,7 +154,7 @@ export class DataService {
     };
 
     return this.http
-      .post<Student>(this.studentsUrl, body, options)
+      .post<Student>(studentsUrl, body, options)
       .pipe(
         retry(3),
         catchError(this.handleError)
@@ -168,7 +168,7 @@ export class DataService {
     };
 
     return this.http
-      .put<Student>(`${this.studentsUrl}/${student.id}`, body, options)
+      .put<Student>(`${studentsUrl}/${student.id}`, body, options)
       .pipe(
         retry(3),
         catchError(this.handleError)
@@ -181,7 +181,7 @@ export class DataService {
     };
 
     const removedStudentsFromSubjects$: Observable<Array<Subject | void>> = this.removeStudentFromSubject(student);
-    const removedStudentFromList$: Observable<{}> = this.http.delete(`${this.studentsUrl}/${student.id}`, options).pipe(
+    const removedStudentFromList$: Observable<{}> = this.http.delete(`${studentsUrl}/${student.id}`, options).pipe(
       catchError(this.handleError)
     );
 

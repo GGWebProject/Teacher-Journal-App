@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Student } from '../../../../common/entities';
 import { DataService } from '../../../../common/services/data.service';
@@ -23,12 +23,13 @@ export class StudentFormComponent implements ICanComponentDeactivate {
   ) { }
 
   public onSaveForm(form: NgForm): void {
+    console.log(form);
     this.student = { id: undefined, ...form.value };
-    this.dataService.saveStudent(this.student)
-      .subscribe(
-        () => this.router.navigate(['/students']),
-        err => console.log(err)
-      );
+    // this.dataService.saveStudent(this.student)
+    //   .subscribe(
+    //     () => this.router.navigate(['/students']),
+    //     err => console.log(err)
+    //   );
   }
 
   public canDeactivate(): boolean {

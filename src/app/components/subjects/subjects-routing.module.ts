@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SubjectsComponent } from './subjects.component';
 import { SubjectFormComponent, SubjectJournalComponent, SubjectsListComponent } from './components';
 import { SubjectResolveGuard } from './guards/subject-resolve.guard';
-import {CanDeactivateGuard} from '../../common/guards/can-diactivate.guard';
+import { CanDeactivateGuard } from '../../common/guards/can-diactivate.guard';
 
 const routes: Routes = [
   {
