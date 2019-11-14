@@ -37,7 +37,7 @@
       </button>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" [ngClass]="getClass()" matSort>
+    <table #table mat-table [dataSource]="dataSource" class="mat-elevation-z8" [ngClass]="getClass()" matSort>
       <ng-container matColumnDef="{{header.property}}" *ngFor="let header of tableHeaders; let colIndex = index;">
         <th
           mat-header-cell
@@ -56,7 +56,7 @@
             class="table__btn table__btn_remove-column"
             *ngIf="options.isEditData && !header.isDisableDelete"
             (click)="onRemoveColumn($event, header.property)">
-            <mat-icon>delete_forever</mat-icon>
+            <mat-icon></mat-icon>
           </button>
         </th>
 
@@ -76,7 +76,7 @@
             matTooltipPosition="after"
             *ngIf="options.isRemoveData && colIndex === tableHeaders.length - 1"
             (click)="onRemoveRow(data)">
-            <mat-icon>delete_forever</mat-icon>
+            <mat-icon></mat-icon>
           </button>
         </td>
       </ng-container>

@@ -20,6 +20,7 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
 import { StudentsEffect } from './store';
+import { MatButtonModule, MatIconModule, MatProgressSpinnerModule } from '@angular/material';
 
 @NgModule({
             declarations: [
@@ -43,8 +44,11 @@ import { StudentsEffect } from './store';
                   strictActionImmutability: true
                 }
               }),
-              StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+              StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
               EffectsModule.forRoot([AppEffects, StudentsEffect]),
+              MatButtonModule,
+              MatIconModule,
+              MatProgressSpinnerModule,
             ],
             providers: [],
             exports: [
