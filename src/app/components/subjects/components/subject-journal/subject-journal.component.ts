@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { delay, map, pluck } from 'rxjs/operators';
 import { forkJoin, Observable, of } from 'rxjs';
@@ -9,6 +9,8 @@ import { IStandardTable, ITableHeader } from '../../../../shared/components/tabl
 import { IMark, ISubjectStudent } from '../../../../common/interfaces';
 import { FormControl } from '@angular/forms';
 import * as _ from 'lodash';
+import { ExcelExportService } from '../../../../shared/services/excel-export.service';
+import { TableComponent } from '../../../../shared/components/table';
 
 @Component({
   selector: 'app-subject-journal',
@@ -16,6 +18,8 @@ import * as _ from 'lodash';
   styleUrls: ['./subject-journal.component.sass']
 })
 export class SubjectJournalComponent implements OnInit {
+
+  @ViewChild(TableComponent, {static: false}) private dataTable: TableComponent;
 
   private subject: Subject;
   private subjectTableHeaders: Array<ITableHeader> = [
@@ -34,6 +38,7 @@ export class SubjectJournalComponent implements OnInit {
     private dataService: DataService,
     private route: ActivatedRoute,
     private router: Router,
+    private excelService: ExcelExportService,
   ) {}
 
   private getSubjectTableDates (subject: Subject): Array<ITableHeader> {
@@ -192,6 +197,11 @@ export class SubjectJournalComponent implements OnInit {
       () => this.router.navigate[`/subject/${newSubject.id}`],
       err => console.log(err)
     );
+  }
+
+  public exportSubjectAsExcel(): void {
+    const table: HTMLTableElement = this.dataTable.table._elementRef.nativeElement;
+    this.excelService.exportAsExcelFile(table, 'StudentsFile');
   }
 
 }
