@@ -1,4 +1,4 @@
-<ng-container *ngIf="!!studentsTableView; else elseBlock">
+<ng-container *ngIf="studentsLoadStatus.loaded && !studentsLoadStatus.loading; else elseBlock">
   <app-table
     [options]="studentsTableOptions"
     [tableView]="studentsTableView"
@@ -13,5 +13,9 @@
   </button>
 </ng-container>
 <ng-template #elseBlock>
-  <mat-spinner *ngIf="!studentsTableView"></mat-spinner>
+  <mat-spinner></mat-spinner>
 </ng-template>
+
+<ng-container *ngIf="!studentsLoadStatus.loaded && !studentsLoadStatus.loading;">
+  <p>При загрузке данных произошла ошибка :( Пожалуйста, повторите попытку позже </p>
+</ng-container>

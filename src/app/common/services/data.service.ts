@@ -135,6 +135,7 @@ export class DataService {
     return this.http
       .get<Array<Student>>(studentsUrl)
       .pipe(
+        delay(1000),
         retry(3),
         catchError(this.handleError)
       );

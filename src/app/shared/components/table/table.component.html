@@ -2,7 +2,7 @@
   <input #tableSearchField matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
 </mat-form-field>
 
-<ng-container *ngIf="!!this.dataSource.data; else elseBlock">
+<ng-container *ngIf="this.dataSource.filteredData.length !== 0; else elseBlock">
   <div class="table__wrapper">
     <button
       mat-mini-fab
@@ -36,6 +36,7 @@
         <mat-icon>redo</mat-icon>
       </button>
     </div>
+
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" [ngClass]="getClass()" matSort>
       <ng-container matColumnDef="{{header.property}}" *ngFor="let header of tableHeaders; let colIndex = index;">
         <th
@@ -97,6 +98,6 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="!this.dataSource.data;">
+<ng-template #elseBlock>
   <p>Sorry! But we didn`t found data :(</p>
-</ng-container>
+</ng-template>
