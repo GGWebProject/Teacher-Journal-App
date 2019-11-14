@@ -1,4 +1,4 @@
 export interface IMark {
-  data: string;
+  date: string;
   value: number;
 }

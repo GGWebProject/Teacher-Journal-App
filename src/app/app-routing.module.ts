@@ -6,7 +6,10 @@ import { ExportComponent, NotFoundComponent } from './components';
 const routes: Routes = [
   {
     path: 'export',
-    component: ExportComponent
+    component: ExportComponent,
+    data: {
+      breadcrumb: 'export'
+    }
   },
   {
     path: '',
@@ -16,6 +19,9 @@ const routes: Routes = [
   {
     path: '**',
     component: NotFoundComponent,
+    data: {
+      breadcrumb: ''
+    }
   }
 ];
 

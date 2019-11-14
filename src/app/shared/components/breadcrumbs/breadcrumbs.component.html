@@ -1,0 +1,7 @@
+<nav *ngIf="breadcrumbs.length > 1" [ngClass]="'nav_breadcrumbs ' + breadcrumbClass">
+  <ul>
+    <li *ngFor="let breadcrumb of breadcrumbs">
+      <a routerLink={{breadcrumb.url}} routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{breadcrumb.label}}</a>
+    </li>
+  </ul>
+</nav>

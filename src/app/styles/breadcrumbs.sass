@@ -1,0 +1,41 @@
+.nav_breadcrumbs
+  ul
+    li
+      display: inline-block
+      & + li
+        margin-left: 20px
+        position: relative
+        &:after
+          content: '>'
+          position: absolute
+          color: lightgray
+          top: 0
+          right: 100%
+          transform: translateX(-50%)
+      a
+        font-size: 1rem
+        color: #333
+        text-decoration: none
+        text-transform: uppercase
+        position: relative
+        &:not(.active)
+          transition: color .3s
+          &:after
+            content: ''
+            position: absolute
+            background-color: #333
+            width: 0
+            height: 2px
+            bottom: -4px
+            left: 0
+            transition: width .3s
+          &:hover
+            &:after
+              width: 100%
+          &:active
+            color: #e96a18
+        &.active
+          color: #e96a18
+          pointer-events: none
+          &:after
+            content: none

@@ -1,16 +1,102 @@
-<table [ngClass]="tableClass ? tableClass + '__table table' : 'table'">
-  <thead>
-    <tr>
-      <th *ngFor="let header of tableHeaders">
-        {{header.name}}
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let row of tableView">
-      <td *ngFor="let props of tableHeaders">
-        {{row[props.property]}}
-      </td>
-    </tr>
-  </tbody>
-</table>
+<mat-form-field *ngIf="options.isSearchField">
+  <input #tableSearchField matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+</mat-form-field>
+
+<ng-container *ngIf="!!this.dataSource.data; else elseBlock">
+  <div class="table__wrapper">
+    <button
+      mat-mini-fab
+      color="primary"
+      matTooltip="Add new column"
+      matTooltipPosition="below"
+      class="table__btn table__btn_add-column"
+      (click)="onAddColumn()"
+      *ngIf="options.isAddColumn">
+      <mat-icon>add</mat-icon>
+    </button>
+    <div class="table__changes-nav" *ngIf="options.isEditData">
+      <button
+        mat-icon-button
+        color="primary"
+        matTooltip="Previous Table State"
+        matTooltipPosition="below"
+        [disabled]="tableChangeIndex < 1"
+        class="table__btn table__btn_prev-change"
+        (click)="moveToChange('prev')">
+        <mat-icon>undo</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="primary"
+        matTooltip="Next Table State"
+        matTooltipPosition="below"
+        [disabled]="tableChangeIndex === tableChanges.length - 1"
+        class="table__btn table__btn_next-change"
+        (click)="moveToChange('next')">
+        <mat-icon>redo</mat-icon>
+      </button>
+    </div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" [ngClass]="getClass()" matSort>
+      <ng-container matColumnDef="{{header.property}}" *ngFor="let header of tableHeaders; let colIndex = index;">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          [appTableDataEdit]="displayedColumns"
+          [validationData]="options.validationPatternHeaders"
+          [isEdit]="options.isEditData && !header.isDisableEdit"
+        >
+          <span (change)="changeHeader(header, $event)">
+            {{header.label}}
+          </span>
+          <button
+            mat-icon-button
+            color="warn"
+            class="table__btn table__btn_remove-column"
+            *ngIf="options.isEditData && !header.isDisableDelete"
+            (click)="onRemoveColumn($event, header.property)">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </th>
+
+        <td
+          mat-cell *matCellDef="let data"
+          appTableDataEdit
+          [validationData]="options.validationPatternData"
+          [isEdit]="options.isEditData && header.isEditColumnData">
+          <span (change)="changeTableData(header, $event, data, colIndex)">
+            {{data[header.property]}}
+          </span>
+          <button
+            mat-icon-button
+            color="warn"
+            class="table__btn table__btn_remove-row"
+            matTooltip="Remove this row"
+            matTooltipPosition="after"
+            *ngIf="options.isRemoveData && colIndex === tableHeaders.length - 1"
+            (click)="onRemoveRow(data)">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [appHighLight]="options.highLightOptions"></tr>
+    </table>
+
+    <button
+      mat-raised-button
+      color="accent"
+      class="table__btn table__btn_save-table"
+      matTooltip="Save table"
+      matTooltipPosition="below"
+      (click)="onSave()"
+      *ngIf="isTableChange">
+      <mat-icon>save</mat-icon>
+    </button>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!this.dataSource.data;">
+  <p>Sorry! But we didn`t found data :(</p>
+</ng-container>

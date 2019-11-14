@@ -4,22 +4,36 @@
       "id": 0,
       "firstName": "Vitaly",
       "lastName": "Hantarenka",
-      "address": "Sharangovicha st., 48",
-      "description": "test desctiprion"
+      "address": "Sharangovicha st., 483",
+      "description": "HELLO33"
     },
     {
       "id": 1,
       "firstName": "Test",
       "lastName": "Testovich",
-      "address": "Testovaya st., 99",
-      "description": "testovii desctiprion"
+      "address": "Testovaya st., 993",
+      "description": "33"
+    },
+    {
+      "firstName": "Гонтаренко",
+      "lastName": "Александрович",
+      "address": "Улица Шаранговича, 48, 463",
+      "description": "description",
+      "id": 3
     },
     {
       "firstName": "Гонтаренко",
       "lastName": "Александрович",
       "address": "Улица Шаранговича, 48, 463",
       "description": "eeeeqweqewqewqewq",
-      "id": 2
+      "id": 4
+    },
+    {
+      "firstName": "Гонтаренко",
+      "lastName": "Александрович",
+      "address": "Улица Шаранговича, 48, 463",
+      "description": "eeeeqweqewqewqewq",
+      "id": 5
     }
   ],
   "subjects": [
@@ -29,31 +43,38 @@
       "teacher": "First teacher",
       "cabiner": 9,
       "description": "test description of subject 1",
+      "dates": [
+        "10.06",
+        "11.06"
+      ],
       "students": [
         {
-          "id": 0,
-          "marks": [
-            {
-              "data": "31.12.2019",
-              "value": 10
-            }
-          ]
+          "id": 1,
+          "marks": []
+        },
+        {
+          "id": 3,
+          "marks": []
         }
       ]
     },
     {
       "id": 1,
       "name": "Chemistry",
-      "teacher": "Second theacher",
+      "teacher": "Second teacher",
       "cabiner": 99,
       "description": "test description of subject 2",
+      "dates": [
+        "11.06",
+        "12.06"
+      ],
       "students": [
         {
           "id": 1,
           "marks": [
             {
-              "data": "31.12.2019",
-              "value": 10
+              "date": "12.06",
+              "value": "5"
             }
           ]
         }
@@ -65,22 +86,17 @@
       "teacher": "Third teacher",
       "cabiner": 999,
       "description": "test description of subject 3",
+      "dates": [
+        "11.06",
+        "12.06"
+      ],
       "students": [
         {
           "id": 0,
           "marks": [
             {
-              "data": "31.12.2019",
-              "value": 10
-            }
-          ]
-        },
-        {
-          "id": 1,
-          "marks": [
-            {
-              "data": "31.12.2019",
-              "value": 10
+              "date": "12.06",
+              "value": "5"
             }
           ]
         }

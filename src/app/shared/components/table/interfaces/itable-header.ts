@@ -1,4 +1,7 @@
 export interface ITableHeader {
-  name: string;
+  label: string;
   property: string;
+  isEditColumnData: boolean;
+  isDisableEdit?: boolean;
+  isDisableDelete?: boolean;
 }

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-navigation',
@@ -8,6 +8,7 @@ import {Component, Input} from '@angular/core';
 export class NavigationComponent {
 
   @Input() public navigationLinks: Array<string>;
+  @Input() public navigationClass?: string = '';
 
   // tslint:disable-next-line:no-empty
   constructor() {}

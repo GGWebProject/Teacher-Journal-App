@@ -1,29 +1,37 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { StudentsListComponent } from './components/students-list/students-list.component';
-import { StudentFormComponent } from './components/student-form/student-form.component';
-import {ExportComponent} from '..';
+import { StudentsListComponent, StudentFormComponent } from './components';
+import { StudentsComponent } from './students.component';
+import { CanDeactivateGuard } from '../../common/guards/can-diactivate.guard';
 
-const routes: Routes = [
+const studentsRoutes: Routes = [
   {
     path: 'students',
-    component: StudentsListComponent,
-    // children: [
-    //   {
-    //     path: 'add',
-    //     component: StudentFormComponent,
-    //   },
-    // ]
-  },
-  {
-    path: 'students/add',
-    component: StudentFormComponent,
+    component: StudentsComponent,
+    data: {
+      breadcrumb: 'students'
+    },
+    children: [
+      {
+        path: '',
+        component: StudentsListComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: 'add',
+        component: StudentFormComponent,
+        data: {
+          breadcrumb: 'add student'
+        },
+        canDeactivate: [CanDeactivateGuard]
+      }
+    ]
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(studentsRoutes)],
   exports: [RouterModule]
 })
 export class StudentsRoutingModule {

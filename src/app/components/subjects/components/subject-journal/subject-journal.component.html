@@ -1,0 +1,30 @@
+<ng-container *ngIf="!!subjectTableView; else elseBlock">
+  <h2 class="subject__name">Journal of {{subject.name}} subject</h2>
+  <span class="subject__teacher">Teacher: <b>{{subject.teacher}}</b></span>
+  <app-table
+    [options]="subjectTableOptions"
+    [tableView]="subjectTableView"
+    (onSaveData)="saveData($event)"
+  ></app-table>
+  <app-shared-form
+    [submitButtonText]="'Add students'"
+    *ngIf="!!studentList"
+    (saveForm)="addStudents()"
+    [ngClass]="'form__students_add'"
+  >
+    <mat-form-field>
+      <mat-label>Students</mat-label>
+      <mat-select [formControl]="studentsListForAdd" multiple required>
+        <mat-option
+          *ngFor="let student of studentList"
+          [value]="student.id"
+          disabled="{{checkStudentInSubject(student.id)}}">
+          {{student.firstName}} {{student.lastName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </app-shared-form>
+</ng-container>
+<ng-template #elseBlock>
+  <mat-spinner></mat-spinner>
+</ng-template>

@@ -1,9 +1,17 @@
-<div class="wrapper">
-  <ng-container *ngIf="!!studentsTableView">
-    <app-table
-      [options]="studentsTableOptions"
-      [tableView]="studentsTableView"
-    ></app-table>
-  </ng-container>
-  <button class="students__button_add" (click)="onCreateStudent()" >Add new Student</button>
-</div>
+<ng-container *ngIf="!!studentsTableView; else elseBlock">
+  <app-table
+    [options]="studentsTableOptions"
+    [tableView]="studentsTableView"
+    (onSaveData)="saveData($event)"
+  ></app-table>
+  <button
+    mat-raised-button
+    color="primary"
+    class="students__button_add"
+    (click)="onCreateStudent()">
+    Add new student
+  </button>
+</ng-container>
+<ng-template #elseBlock>
+  <mat-spinner *ngIf="!studentsTableView"></mat-spinner>
+</ng-template>
