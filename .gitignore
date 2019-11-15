@@ -45,3 +45,4 @@ docs
 # System Files
 .DS_Store
 Thumbs.db
+!/db/db.json

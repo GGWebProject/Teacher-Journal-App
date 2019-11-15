@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
-  StudentsListComponent, StudentFormComponent, StudentPageComponent
+  StudentsListComponent, StudentFormComponent
 } from './components';
 import { StudentsComponent } from './students.component';
 import { FormComponent, TableComponent } from '../../shared/components';
@@ -22,7 +22,6 @@ import { HighLightDirective, TableDataEditDirective } from '../../shared/compone
             declarations: [
               StudentsListComponent,
               StudentFormComponent,
-              StudentPageComponent,
               FormComponent,
               TableComponent,
               StudentsComponent,

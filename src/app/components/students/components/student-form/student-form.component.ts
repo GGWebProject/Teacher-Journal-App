@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class StudentFormComponent implements ICanComponentDeactivate {
 
   private student: Student;
+  private isSaveStudent: boolean;
 
   @ViewChild('studentFormComponent', { static: false }) public studentFormComponent: NgForm;
 
@@ -23,17 +24,23 @@ export class StudentFormComponent implements ICanComponentDeactivate {
   ) { }
 
   public onSaveForm(form: NgForm): void {
-    console.log(form);
     this.student = { id: undefined, ...form.value };
-    // this.dataService.saveStudent(this.student)
-    //   .subscribe(
-    //     () => this.router.navigate(['/students']),
-    //     err => console.log(err)
-    //   );
+    this.dataService.saveStudent(this.student)
+      .subscribe(
+        () => {
+            this.isSaveStudent = true;
+            return this.router.navigate(['/students']);
+          },
+        err => console.log(err)
+      );
   }
 
   public canDeactivate(): boolean {
-    return !this.studentFormComponent.form.dirty || window.confirm('You didn`t save the student. Are you sure you want to exit?');
+    return (
+      this.isSaveStudent ||
+      !this.studentFormComponent.form.dirty ||
+      window.confirm('You didn`t save the student. Are you sure you want to exit?')
+    );
   }
 
 }

@@ -6,6 +6,8 @@ import { DataService } from '../../../../common/services/data.service';
 import '../../../../../../db/db.json';
 import { ITableHeader, IStandardTable, TableOptions } from '../../../../shared/components/table';
 import * as _ from 'lodash';
+import * as fromStore from '../../../../store';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-students-list',
@@ -15,7 +17,6 @@ import * as _ from 'lodash';
 
 export class StudentsListComponent implements OnInit {
 
-  private studentsList$: Observable<Array<Student>>;
   private studentTableHeaders: Array<ITableHeader> = [
       {label: 'Id', property: 'id', isDisableEdit: true, isDisableDelete: true, isEditColumnData: false},
       {label: 'Name', property: 'firstName', isDisableEdit: true, isDisableDelete: true, isEditColumnData: true},
@@ -25,12 +26,14 @@ export class StudentsListComponent implements OnInit {
     ];
   private studentTableClass: string = 'students';
 
+  public studentsLoadStatus: {loaded: boolean, loading: boolean};
   public studentsTableOptions: TableOptions;
   public studentsTableView: Array<Student>;
 
   constructor(
     private dataService: DataService,
     private router: Router,
+    private store: Store<fromStore.IState>
   ) {}
 
   private compareStudentsArrays(newArr: Array<Student>, oldArr: Array<Student>): Array<Student> {
@@ -80,13 +83,17 @@ export class StudentsListComponent implements OnInit {
       isRemoveData: true,
     };
     this.studentsTableOptions = new TableOptions(tableOptions);
-    this.studentsList$ = this.dataService.getStudents();
-    this.studentsList$.subscribe(
+    this.store.select(fromStore.getStudents).subscribe(
       data => {
         this.studentsTableView = [...data];
       },
-      err => console.log(err),
     );
+    this.store.select(fromStore.getStudentsLoadStatus).subscribe(
+      data => {
+        this.studentsLoadStatus = {...data};
+      },
+    );
+    this.store.dispatch(fromStore.studentsLoad());
   }
 
   public saveData(data: IStandardTable): void {
