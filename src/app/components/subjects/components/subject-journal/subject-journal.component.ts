@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { delay, map, pluck } from 'rxjs/operators';
 import { forkJoin, Observable, of } from 'rxjs';
@@ -19,7 +19,7 @@ import { TableComponent } from '../../../../shared/components/table';
 })
 export class SubjectJournalComponent implements OnInit {
 
-  @ViewChild(TableComponent, {static: false}) private dataTable: TableComponent;
+  @ViewChild(TableComponent, {read: ViewContainerRef, static: false}) private tableComponent: ViewContainerRef;
 
   private subject: Subject;
   private subjectTableHeaders: Array<ITableHeader> = [
@@ -200,8 +200,8 @@ export class SubjectJournalComponent implements OnInit {
   }
 
   public exportSubjectAsExcel(): void {
-    const table: HTMLTableElement = this.dataTable.table._elementRef.nativeElement;
-    this.excelService.exportAsExcelFile(table, 'StudentsFile');
+    const table: HTMLTableElement = this.tableComponent.element.nativeElement.querySelector('table');
+    this.excelService.exportAsExcelFile(table, `Subject_${(this.subject.name).toUpperCase()}_info`);
   }
 
 }

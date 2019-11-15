@@ -14,7 +14,7 @@ export class ExcelExportService {
       worksheet = XLSX.utils.table_to_sheet(data);
     }
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-    XLSX.writeFile(workbook, 'SheetJS.xlsx');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'sheet1');
+    XLSX.writeFile(workbook, `${excelFileName}.xlsx`);
   }
 }

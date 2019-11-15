@@ -20,8 +20,6 @@ export class FormComponent implements AfterViewInit {
   @ContentChildren(NgModel) public models: QueryList<NgModel>;
   @ViewChild(NgForm, {static: false}) public form: NgForm;
 
-  constructor() {}
-
   public ngAfterViewInit(): void {
     let ngContentModels: NgModel[] = this.models.toArray();
 
