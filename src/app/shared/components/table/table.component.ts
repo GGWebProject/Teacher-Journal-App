@@ -31,6 +31,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort, {static: false}) public sort: MatSort;
   @ViewChild('tableSearchField', {static: false}) public searchField: ElementRef;
+  @ViewChild('table', {static: false}) public table: any;
 
   // tslint:disable-next-line:no-empty
   constructor() {}
@@ -275,7 +276,6 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.standardTable.tableData = this.dataSource.data.map(data => ({...data}));
     this.standardTable.tableHeaders = this.tableHeaders.map(header => ({...header}));
     this.standardTable.tableDisplayCols = [...this.displayedColumns];
-
     const tableDataChange: ITableChange = {
       type: 'firstState',
       rowIndex: null,

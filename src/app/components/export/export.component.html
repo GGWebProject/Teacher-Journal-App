@@ -1,1 +1,13 @@
-<p>export works!</p>
+<div class="wrapper">
+  <button
+    mat-raised-button
+    (click)="exportStudentAsExcel()">
+  <mat-icon *ngIf="!studentsLoadStatus || !studentsLoadStatus.loading; else elseBlock">
+    save_alt
+  </mat-icon>
+  <ng-template #elseBlock>
+    <mat-spinner [diameter]="20" class="load-status"></mat-spinner>
+  </ng-template>
+    Export Students to Excel
+  </button>
+</div>

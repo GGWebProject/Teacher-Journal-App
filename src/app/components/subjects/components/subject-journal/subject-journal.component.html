@@ -24,6 +24,14 @@
       </mat-select>
     </mat-form-field>
   </app-shared-form>
+  <button
+    mat-raised-button
+    (click)="exportSubjectAsExcel()">
+    <mat-icon>
+      save_alt
+    </mat-icon>
+    Export Subject to Excel
+  </button>
 </ng-container>
 <ng-template #elseBlock>
   <mat-spinner></mat-spinner>
